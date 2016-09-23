@@ -106,7 +106,7 @@ public class TripServiceImpl {
 	 * 
 	 */
 	public List<Trip> pagination(Client client, SortTripDto sortTripDto, FiltrTripClientDto filtrTripClientDto,
-			PaginationDto paginationDto) throws ServiceException {
+			PaginationDto paginationDto){
 
 		FiltrTrip filtrTrip = null;
 		SortTrip sortTrip = null;
@@ -140,7 +140,7 @@ public class TripServiceImpl {
 	 *
 	 */
 	public List<Trip> sortTrip(SortTripDto sortTripDto, FiltrTripClientDto filtrTripClientDto, Client client,int max)
-			throws ServiceException {
+		{
 		FiltrTrip filtrOrder = null;
 		List<Trip> list = null;
 		if (filtrTripClientDto != null) {
@@ -164,7 +164,7 @@ public class TripServiceImpl {
 	 * 
 	 */
 	public List<Trip> filtrTrip(Client client, FiltrTripClientDto filtrTripClientDto, SortTripDto sortTripDto)
-			throws ServiceException {
+		{
 		List<Trip> tripsDefine = null;
 		FiltrTrip filtrTrip = null;
 		SortTrip sortTrip = null;

@@ -48,7 +48,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
-	public String adminPages(Model model, HttpServletRequest request) throws ServiceException {
+	public String adminPages(Model model, HttpServletRequest request){
 		String page = null;
 		Client admin = clientServiceImpl.getClient(ADMIN_ROLE_ID);
 		page = ConstantsPages.PAGES_ADMIN;
@@ -68,7 +68,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/trip", method = RequestMethod.GET)
-	public String adminTripInf(Model model) throws ServiceException {
+	public String adminTripInf(Model model){
 		String page = null;
 		List<Trip> trips = tripServiceImpl.allTrip();
 		model.addAttribute("ALLTRIP", trips);
@@ -77,7 +77,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/trip_cond", method = RequestMethod.POST)
-	public String changeTripCondition(Model model, HttpServletRequest request) throws ServiceException {
+	public String changeTripCondition(Model model, HttpServletRequest request){
 		String page = null;
 		int idOrder = Integer.parseInt((request.getParameter("change_condition")));
 		int newCond = Integer.parseInt((request.getParameter("condition")).trim());
@@ -90,7 +90,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/car", method = RequestMethod.GET)
-	public String adminCarInf(Model model) throws ServiceException {
+	public String adminCarInf(Model model) {
 		String page = null;
 		model.addAttribute("ALLCAR", carServiceImpl.allCar());
 		page = ConstantsPages.CHANGE_CAR_COND;
@@ -98,7 +98,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/car_cond", method = RequestMethod.POST)
-	public String changeCarCondition(Model model, HttpServletRequest request) throws ServiceException {
+	public String changeCarCondition(Model model, HttpServletRequest request){
 		String page = null;
 		int idCar = Integer.parseInt((request.getParameter("change_condition")));
 		int newCond = Integer.parseInt((request.getParameter("condition")).trim());

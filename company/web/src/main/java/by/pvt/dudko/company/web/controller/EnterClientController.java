@@ -42,7 +42,7 @@ public class EnterClientController {
 	}
 
 	@RequestMapping(value = "/registr", method = RequestMethod.POST)
-	public String registration(ClientDto clientDto, Model model, HttpServletRequest request) throws ServiceException {
+	public String registration(ClientDto clientDto, Model model, HttpServletRequest request) {
 		String page = null;
 		Client client = clientServiceImpl.getUser(clientDto.getLogin(), clientDto.getPassword());
 		if (!clientDto.getLogin().isEmpty() && !clientDto.getLogin().isEmpty() && client == null) {

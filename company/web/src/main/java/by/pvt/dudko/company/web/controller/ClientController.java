@@ -52,20 +52,18 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = "/delTrip", method = RequestMethod.POST)
-	public String deleteOneTripClient(Model model, HttpServletRequest request) throws ServiceException {
-		String page = null;
+	public String deleteOneTripClient(Model model, HttpServletRequest request) {
 		int idOrder = Integer.parseInt((request.getParameter("delete_trip")));
 		Trip trip = tripServiceImpl.getTrip(idOrder);
 		tripServiceImpl.deleteTrip(trip);
 		List<Trip> trips = clientServiceImpl.tripsClient((Client) request.getSession().getAttribute("USER"));
 		model.addAttribute("trips", trips);
-		page = ConstantsPages.ORDERS;
 		return "redirect:/client/redirect/orders";
 
 	}
 
 	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
-	public String fixationTrip(Model model, OrderDto orderDto, HttpServletRequest request) throws ServiceException, Exception {
+	public String fixationTrip(Model model, OrderDto orderDto, HttpServletRequest request) {
 		String page = null;
 		Client client = (Client) request.getSession().getAttribute("USER");
 		int i = orderServiceImpl.estimateDateOrder(orderDto, client);
@@ -74,30 +72,28 @@ public class ClientController {
 		} else if (i == 2) {
 			model.addAttribute("ERROR", "errorTextNotFoundCar");
 			model.addAttribute("URL", "client/order");
-			return page = ConstantsPages.ERROR;
+			return ConstantsPages.ERROR;
 		} else {
 			model.addAttribute("ERROR", "incorrect");
 			model.addAttribute("URL", "client/order");
-			return page = ConstantsPages.ERROR;
+			return ConstantsPages.ERROR;
 		}
 	
 	}
 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public String clientDelete(Model model, HttpServletRequest request) throws ServiceException {
-		String page = null;
+	public String clientDelete(Model model, HttpServletRequest request) {
 		Client client = (Client) request.getSession().getAttribute("USER");
 		List<Trip> list = tripServiceImpl.getTripUser(client);
 		int i = tripServiceImpl.existTripClient(list);
 		if (i == 0) {
 			clientServiceImpl.deleteUser(client);
 			request.getSession().invalidate();
-			page = ConstantsPages.PAGES_BASE;
 			return "redirect:/start_page";
 		} else {
 			model.addAttribute("ERROR", "warning");
 			model.addAttribute("URL", "client/return");
-			return page = ConstantsPages.ERROR;
+			return ConstantsPages.ERROR;
 		}
 	}
 
@@ -114,7 +110,7 @@ public class ClientController {
 	}
 	
 	@RequestMapping(value = "/redirect/orders", method = RequestMethod.GET)
-	public String myOrdersRedirect(HttpServletRequest request) throws ServiceException {
+	public String myOrdersRedirect(HttpServletRequest request){
 		String page = null;
 		Client client = (Client) request.getSession().getAttribute("USER");
 		SortTripDto sortTripDto = (SortTripDto) request.getSession().getAttribute("source");
@@ -126,7 +122,7 @@ public class ClientController {
 		
 	}
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
-	public String myOrders(Model model, HttpServletRequest request) throws ServiceException {
+	public String myOrders(Model model, HttpServletRequest request){
 		String page = null;
 		Client client = (Client) request.getSession().getAttribute("USER");
 		List<Trip> trips = clientServiceImpl.tripsClient(client);

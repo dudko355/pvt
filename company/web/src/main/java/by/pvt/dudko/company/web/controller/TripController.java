@@ -33,7 +33,7 @@ public class TripController {
 	private TripServiceImpl tripServiceImpl;
 
 	@RequestMapping(value = "/filtr", method = RequestMethod.POST)
-	public String filtrTrip(Model model, HttpServletRequest request) throws ServiceException {
+	public String filtrTrip(Model model, HttpServletRequest request){
 		String page = null;
 		FiltrTripClientDto filtrTripClientDto = new FiltrTripClientDto();
 		String dateBegin = request.getParameter("dateBegin").trim();
@@ -57,7 +57,7 @@ public class TripController {
 	}
 
 	@RequestMapping(value = "/sort", method = RequestMethod.POST)
-	public String sortTrip(Model model, HttpServletRequest request) throws ServiceException {
+	public String sortTrip(Model model, HttpServletRequest request) {
 		String page = null;
 		SortTripDto sortTripDto = new SortTripDto();
 		sortTripDto.setOrderColumn(request.getParameter("order").trim());
@@ -72,7 +72,7 @@ public class TripController {
 	}
 
 	@RequestMapping(value = "/amount", method = RequestMethod.GET)
-	public String amountElementPage(Model model, HttpServletRequest request) throws ServiceException {
+	public String amountElementPage(Model model, HttpServletRequest request){
 		String page = null;
 		int amount = Integer.parseInt(request.getParameter("element").trim());
 		Client client = (Client) request.getSession().getAttribute("USER");
@@ -89,7 +89,7 @@ public class TripController {
 	}
 
 	@RequestMapping(value = "/next_page", method = RequestMethod.GET)
-	public String nextPage(Model model, HttpServletRequest request) throws ServiceException {
+	public String nextPage(Model model, HttpServletRequest request) {
 		String page = null;
 		int number = Integer.parseInt(request.getParameter("next_page").trim());
 		PaginationDto paginationDto = (PaginationDto) request.getSession().getAttribute("pagination");
