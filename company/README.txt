@@ -20,35 +20,35 @@ Your computer should be set to deploy this application:
 4)MySql 5.6                    http://dev.mysql.com/
 =========================================================================
 You need do before deploy:
-
-1)Open the file settings.xml in your maven(...\maven3.3.9\conf\settings.xml) 
+1)turn on internet
+2)Open the file settings.xml in your maven(...\maven3.3.9\conf\settings.xml) 
 and write inside the tag <servers>
      <server>
   	<id>tomcat</id>
       	<username>adm</username>
       	<password>111</password>
      </server>
-2)Open the file tomcat-users.xml in your tomcat(...\apache-tomcat-8.0.36\conf\tomcat-users.xml)
+3)Open the file tomcat-users.xml in your tomcat(...\apache-tomcat-8.0.36\conf\tomcat-users.xml)
  and write inside the tag <tomcat-users> 
      <role rolename="manager-gui"/>
      <role rolename="manager-script"/>
      <role rolename="admin"/>
      <user username="adm" password="111" roles="manager-gui,manager-script"/>
      <user username="admin" password="2110984" roles="admin"/>
-3)Register environment variables
+4)Register environment variables
 -CATALINA_HOME(for tomcat)
 -JAVA_HOME(for jdk)
 -M2_HOME(for maven)
 -PATH(for tomcat,maven,mysql,jdk)
-4)Open company.properties
+5)Open company.properties
 (you can find ...\company\dao\src\main\resources\company.properties)
-5)Ñhange the settings of access to the database and port of apache tomcat(if need be)
-6)Save and close company.properties
-7)run apache tomcat(...\apache-tomcat-8.0.36\bin\startup.bat)
-8)run this application(...\company\dao\src\main\resources\company.bat)
+6)Ñhange the settings of access to the database and port of apache tomcat(if need be)
+7)Save and close company.properties
+8)run apache tomcat(...\apache-tomcat-8.0.36\bin\startup.bat)
+9)run this application(...\company\dao\src\main\resources\company.bat)
 (remark:mysql server don't have base with name company)
-9)open web browser
-10)text http://localhost:8080/company/(if you don't change port)
+10)open web browser
+11)text http://localhost:8080/company/(if you don't change port)
 =====================================================================================
 Initial application data
 1)administrator(password:2110984 name:admin)
