@@ -26,11 +26,11 @@ input {
 function Formdata(data){
 	if (data.dateBegin != null && data.dateBegin.value.length == 0 )
 	{
-	alert('Заполните поле дата начала');
+	alert('<fmt:message key="validDateBegin" />');
 	return false;}
 	if (data.dateFinish != null && data.dateFinish.value.length == 0)
 	{
-	alert('Заполните поле дата окончания');
+	alert('<fmt:message key="validDateFinish" />');
 	return false;}
 	}
 
