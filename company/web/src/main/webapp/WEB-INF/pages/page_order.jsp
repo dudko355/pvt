@@ -22,7 +22,6 @@ input {
 }
 </style>
 <script type="text/javascript">
-
 function Formdata(data){
 	if (data.dateBegin != null && data.dateBegin.value.length == 0 )
 	{
@@ -33,17 +32,14 @@ function Formdata(data){
 	alert('<fmt:message key="validDateFinish" />');
 	return false;}
 	}
-
-
 	$(function() {
-		
+
 		$('#datep').datepicker(
-					
+
 		);
-		
+
 	});
-	
-	
+
 	$(function() {
 
 		$('#datepic').datepicker();
@@ -94,7 +90,7 @@ body {
 				<fieldset>
 
 					<label for="target"><fmt:message key="target" /> :</label> <input
-						id="target" type="text" size="20" maxlength="20"  name="target"
+						id="target" type="text" size="20" maxlength="20" name="target"
 						required /> <br> <br>
 					<fmt:message key="distanse" />
 					: <br>
@@ -105,12 +101,14 @@ body {
 					</s:select>
 					<br> <br>
 					<fmt:message key="dateBegin" />
-					:<br> <input type="text" name="dateBegin" readonly  id="datep"
-						 required />  <br> <br>
+					:<br> <input name="dateBegin" readonly
+								id="datep" required />
+							<s:errors name="dateBegin" /> <br> <br>
 					<fmt:message key="dateFinish" />
 					: <br>
-					<input type="text" name="dateFinish" readonly  id="datepic" 
-						 required /> <br> <br>
+					<input name="dateFinish" readonly id="datepic" required />  <s:errors
+								name="dateFinish" /><s:errors name="dateFinish" />
+							<br> <br>
 					<fmt:message key="volume" />
 					: <br>
 					<s:select name="volume" path="volume">
@@ -135,8 +133,9 @@ body {
 						</c:forEach>
 					</s:select>
 					<br> <br> <input type="submit"
-						value="<fmt:message key="true" />" onClick="return Formdata(this.form)"/>
-				</fieldset>
+								value="<fmt:message key="true" />" onClick="return Formdata(this.form)"/>
+				
+						</fieldset>
 			</s:form>
 			<a href="${pageContext.servletContext.contextPath}/client/return"><button>
 					<fmt:message key="backClient" />

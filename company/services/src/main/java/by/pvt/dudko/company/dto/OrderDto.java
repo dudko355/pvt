@@ -2,16 +2,20 @@ package by.pvt.dudko.company.dto;
 
 import java.util.Date;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
-@Component
+
 public class OrderDto {
 	
 	private String target;
 	private int dictanse;
-	@NotNull( message="Invalid date.")
-	private Date dateBegin;
-	@NotNull( message="Invalid date.")
-	private Date dateFinish;
+	@NotEmpty(message="wrong date.")
+	private String dateBegin;
+	@NotEmpty(message="wrong date.")
+	private String dateFinish;
 	private int seatCount;
 	private int mass;
 	private int volume;
@@ -40,11 +44,11 @@ public class OrderDto {
 		return dictanse;
 	}
 
-	public Date getDateBegin() {
+	public String getDateBegin() {
 		return dateBegin;
 	}
 
-	public Date getDateFinish() {
+	public String getDateFinish() {
 		return dateFinish;
 	}
 	
@@ -56,12 +60,12 @@ public class OrderDto {
 		this.dictanse = dictanse;
 	}
 
-	public void setDateBegin(Date dateBegin) {
+	public void setDateBegin(String dateBegin) {
 		 this.dateBegin= dateBegin;
 		 
 	}
 
-	public void setDateFinish(Date dateFinish) {
+	public void setDateFinish(String dateFinish) {
 		this.dateFinish = dateFinish;
 		 
 	}

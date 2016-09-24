@@ -59,8 +59,8 @@ public class AdminTest {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin(sdf.parse("2016-10-12"));
-			orderDto.setDateFinish(sdf.parse("2016-10-15"));
+			orderDto.setDateBegin("12-10-2016");
+			orderDto.setDateFinish("15-10-2016");
 			orderDto.setDictanse(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);
@@ -82,8 +82,8 @@ public class AdminTest {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin(sdf.parse("2016-10-12"));
-			orderDto.setDateFinish(sdf.parse("2016-10-15"));
+			orderDto.setDateBegin("12-10-2016");
+			orderDto.setDateFinish("15-10-2016");
 			orderDto.setDictanse(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);

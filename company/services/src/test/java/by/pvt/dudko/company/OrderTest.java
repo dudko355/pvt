@@ -31,6 +31,7 @@ import by.pvt.dudko.company.service.CarServiceImpl;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.DriverServerImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
+import by.pvt.dudko.company.util.UtilDate;
 
 @ContextConfiguration("/testContextServices.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -106,8 +107,8 @@ public class OrderTest {
 			log.info("test FormAndFixOrder in service begin");
 			int size=orderServiceImpl.allOrder().size();
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin(sdf.parse("2016-10-12"));
-			orderDto.setDateFinish(sdf.parse("2016-10-15"));
+			orderDto.setDateBegin("15-10-2016");
+			orderDto.setDateFinish("15-10-2016");
 			orderDto.setDictanse(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);
@@ -115,8 +116,8 @@ public class OrderTest {
 			orderDto.setVolume(2);
 			Client client=clientServiceImpl.getUser("alex", "111111");	
 			Order order=orderServiceImpl.formOrder(client, orderDto);
-			Trip trip = new Trip(orderDto.getTarget(), 275, 2, 102, orderDto.getDateBegin(),
-					orderDto.getDateFinish(), 0, carServiceImpl.getCar(1), order);
+			Trip trip = new Trip(orderDto.getTarget(), 275, 2, 102, UtilDate.date(orderDto.getDateBegin()),
+					UtilDate.date(orderDto.getDateFinish()), 0, carServiceImpl.getCar(1), order);
 			order.setTrip(trip);
 			orderServiceImpl.fixationOrder(order);
 			Assert.assertEquals(true, orderServiceImpl.allOrder().size() == size+1);

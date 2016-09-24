@@ -15,8 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.pvt.dudko.company.dto.ClientDto;
@@ -65,7 +67,13 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
-	public String fixationTrip(Model model, OrderDto orderDto, HttpServletRequest request) {
+	public String fixationTrip(Model model,@Valid @ModelAttribute("orderDto") OrderDto orderDto,BindingResult bindingResult, HttpServletRequest request) {
+		 if(bindingResult.hasErrors()) {
+			    model.addAttribute("ERROR", "incorrect");
+				model.addAttribute("URL", "client/order");
+				return ConstantsPages.ERROR;
+		 }
+		
 		Client client = (Client) request.getSession().getAttribute("USER");
 		int i = orderServiceImpl.estimateDateOrder(orderDto, client);
 		if (i == 0) {
@@ -106,7 +114,8 @@ public class ClientController {
 
 	@RequestMapping(value = "/order", method = RequestMethod.GET)
 	public String makeOrder(Model model, HttpServletRequest request) {
-		model.addAttribute(new OrderDto());
+		OrderDto orderDto=new OrderDto();
+		model.addAttribute(orderDto);
 		return ConstantsPages.PAGES_ORDER;
 	}
 	

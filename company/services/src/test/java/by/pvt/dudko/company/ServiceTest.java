@@ -61,8 +61,8 @@ public class ServiceTest {
 		int sizeTrip = tripServiceImpl.allTrip().size();
 		int sizeOrder = orderServiceImpl.allOrder().size();
 		OrderDto orderDto = new OrderDto();
-		orderDto.setDateBegin(sdf.parse("2016-10-12"));
-		orderDto.setDateFinish(sdf.parse("2016-10-15"));
+		orderDto.setDateBegin("15-10-2016");
+		orderDto.setDateFinish("15-10-2016");
 		orderDto.setDictanse(29);
 		orderDto.setMass(200);
 		orderDto.setSeatCount(1);
@@ -82,8 +82,8 @@ public class ServiceTest {
 			int sizeTrip = tripServiceImpl.allTrip().size();
 			int sizeOrder = orderServiceImpl.allOrder().size();
 			OrderDto orderDto = new OrderDto();
-			orderDto.setDateBegin(sdf.parse("2016-10-12"));
-			orderDto.setDateFinish(sdf.parse("2016-10-15"));
+			orderDto.setDateBegin("15-10-2016");
+			orderDto.setDateFinish("15-10-2016");
 			orderDto.setDictanse(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);

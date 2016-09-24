@@ -21,6 +21,7 @@ import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.PropertiesOrder;
 import by.pvt.dudko.company.entities.Trip;
 import by.pvt.dudko.company.exception.ServiceException;
+import by.pvt.dudko.company.util.UtilDate;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -59,8 +60,10 @@ public class OrderServiceImpl {
 	public int estimateDateOrder(OrderDto orderDto, Client client) {
 		int i = 1;
 		Date date = new Date();
+		Date dateBegin=UtilDate.date(orderDto.getDateBegin());
+		Date dateFinish=UtilDate.date(orderDto.getDateFinish());
 		try {
-			if (orderDto.getDateFinish().after(orderDto.getDateBegin()) && orderDto.getDateBegin().after(date)) {
+			if (dateFinish.after(dateBegin) && dateBegin.after(date)) {
 				serviceImpl.transactionSaveTrip(client, orderDto);
 				i = 0;
 			} else {
@@ -94,8 +97,8 @@ public class OrderServiceImpl {
 
 	public Order formOrder(Client client, OrderDto orderDto) {
 		PropertiesOrder propertiesOrder = new PropertiesOrder();
-		propertiesOrder.setDateBegin(orderDto.getDateBegin());
-		propertiesOrder.setDateFinish(orderDto.getDateFinish());
+		propertiesOrder.setDateBegin(UtilDate.date(orderDto.getDateBegin()));
+		propertiesOrder.setDateFinish(UtilDate.date(orderDto.getDateFinish()));
 		propertiesOrder.setDictanse(orderDto.getDictanse());
 		propertiesOrder.setMass(orderDto.getMass());
 		propertiesOrder.setSeatCount(orderDto.getSeatCount());
