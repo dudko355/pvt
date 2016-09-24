@@ -1,11 +1,16 @@
 package by.pvt.dudko.company.dto;
 
 import java.util.Date;
-
+import javax.validation.constraints.NotNull;
+import org.springframework.stereotype.Component;
+@Component
 public class OrderDto {
+	
 	private String target;
 	private int dictanse;
+	@NotNull( message="Invalid date.")
 	private Date dateBegin;
+	@NotNull( message="Invalid date.")
 	private Date dateFinish;
 	private int seatCount;
 	private int mass;
