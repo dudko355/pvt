@@ -56,11 +56,10 @@ public class AdminTest {
 	@Test
 	
 	public void testSelectCar() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin("12-10-2016");
-			orderDto.setDateFinish("15-10-2016");
+			orderDto.setDateBegin("10/12/2016");
+			orderDto.setDateFinish("10/15/2016");
 			orderDto.setDictanse(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);
@@ -79,11 +78,10 @@ public class AdminTest {
 	@Test
 	
 	public void testFormTrip() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin("12-10-2016");
-			orderDto.setDateFinish("15-10-2016");
+			orderDto.setDateBegin("10/12/2016");
+			orderDto.setDateFinish("10/15/2016");
 			orderDto.setDictanse(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);

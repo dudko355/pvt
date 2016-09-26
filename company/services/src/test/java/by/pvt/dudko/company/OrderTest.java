@@ -101,14 +101,13 @@ public class OrderTest {
 	}
 	@Test
 	public void testFormAndFixOrder() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
+			
 		try {
 			log.info("test FormAndFixOrder in service begin");
 			int size=orderServiceImpl.allOrder().size();
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin("15-10-2016");
-			orderDto.setDateFinish("15-10-2016");
+			orderDto.setDateBegin("10/12/2016");
+			orderDto.setDateFinish("10/15/2016");
 			orderDto.setDictanse(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);
