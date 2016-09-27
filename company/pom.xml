@@ -214,6 +214,12 @@
 				<version>2.6</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+			</dependency>
+
 			<!--Validation -->
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -247,7 +253,7 @@
 		<dbcp.version>1.4</dbcp.version>
 		<cglib.version>3.1</cglib.version>
 		<spring.security>4.0.3.RELEASE</spring.security>
-		
+
 	</properties>
 
 	<build>
@@ -285,7 +291,7 @@
 					<password>111</password>
 				</configuration>
 			</plugin>
-			
+
 		</plugins>
 	</build>
 

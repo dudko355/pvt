@@ -23,10 +23,10 @@ import by.pvt.dudko.company.dao.IDao;
 import by.pvt.dudko.company.dao.IOrderDao;
 import by.pvt.dudko.company.dao.ITripDao;
 import by.pvt.dudko.company.dao.impl.MySqlTripDao;
+import by.pvt.dudko.company.dto.FilterTripClientDto;
+import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Client;
-import by.pvt.dudko.company.entities.FiltrTrip;
 import by.pvt.dudko.company.entities.Order;
-import by.pvt.dudko.company.entities.SortTrip;
 import by.pvt.dudko.company.entities.Trip;
 import by.pvt.dudko.company.util.UtilDate;
 
@@ -98,7 +98,7 @@ public class DaoTripTest {
 	@Test
 	public void testSortTripClient() {
 		try {
-			SortTrip sortTrip = new SortTrip();
+			SortTripDto sortTrip = new SortTripDto();
 			sortTrip.setColumn("dateBegin");
 			sortTrip.setOrderColumn("ASC");
 			Client client = clientDao.get(2);
@@ -114,7 +114,7 @@ public class DaoTripTest {
 	public void testgetFiltrTrips() {
 		try {
 			Client client = clientDao.get(2);
-			FiltrTrip filtrTrip = new FiltrTrip();
+			FilterTripClientDto filtrTrip = new FilterTripClientDto();
 			filtrTrip.setDateBegin(UtilDate.date("15/06/2016"));
 			filtrTrip.setDateFinish(UtilDate.date("15/08/2017"));
 			filtrTrip.setTarget("");

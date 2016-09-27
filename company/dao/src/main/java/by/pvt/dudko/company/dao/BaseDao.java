@@ -25,7 +25,7 @@ public class BaseDao<T> implements IDao<T> {
 
 	}
 
-	public Session getSession() {
+	protected Session getSession() {
 		return sessionFactory.getCurrentSession();
 	}
 

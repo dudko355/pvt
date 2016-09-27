@@ -1,11 +1,8 @@
 package by.pvt.dudko.company.service;
 
-import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import org.apache.log4j.Logger;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,20 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import by.pvt.dudko.company.dao.IDao;
 import by.pvt.dudko.company.dao.IOrderDao;
 import by.pvt.dudko.company.dao.ITripDao;
-import by.pvt.dudko.company.dao.impl.MySqlCarDao;
-import by.pvt.dudko.company.dao.impl.MySqlOrderDao;
-import by.pvt.dudko.company.dao.impl.MySqlTripDao;
-import by.pvt.dudko.company.dto.FiltrTripClientDto;
+import by.pvt.dudko.company.dto.FilterTripClientDto;
 import by.pvt.dudko.company.dto.PaginationDto;
 import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
-import by.pvt.dudko.company.entities.FiltrTrip;
-import by.pvt.dudko.company.entities.Order;
-import by.pvt.dudko.company.entities.Pagination;
-import by.pvt.dudko.company.entities.SortTrip;
 import by.pvt.dudko.company.entities.Trip;
-import by.pvt.dudko.company.exception.ServiceException;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -105,30 +94,10 @@ public class TripServiceImpl {
 	 * @return collection trip
 	 * 
 	 */
-	public List<Trip> pagination(Client client, SortTripDto sortTripDto, FiltrTripClientDto filtrTripClientDto,
-			PaginationDto paginationDto){
+	public List<Trip> pagination(Client client, SortTripDto sortTripDto, FilterTripClientDto filtrTripClientDto,
+			PaginationDto paginationDto) {
 
-		FiltrTrip filtrTrip = null;
-		SortTrip sortTrip = null;
-		List<Trip> list = null;
-		Pagination pagination = new Pagination();
-		pagination.setAmount(paginationDto.getCount());
-		pagination.setStart(paginationDto.getStart());
-		pagination.setAllAmount(paginationDto.getAllCount());
-		pagination.setAllPage(paginationDto.getAllPage());
-		pagination.setPage(paginationDto.getPage());
-		if (filtrTripClientDto != null) {
-			filtrTrip = new FiltrTrip();
-			filtrTrip.setDateBegin(filtrTripClientDto.getDateBegin());
-			filtrTrip.setDateFinish(filtrTripClientDto.getDateFinish());
-			filtrTrip.setTarget(filtrTripClientDto.getTarget());
-		}
-		if (sortTripDto != null) {
-			sortTrip = new SortTrip();
-			sortTrip.setColumn(sortTripDto.getColumn());
-			sortTrip.setOrderColumn(sortTripDto.getOrderColumn());
-		}
-		list = mySqlTripDao.paginationDao(client, sortTrip, filtrTrip, pagination);
+		List<Trip> list = mySqlTripDao.paginationDao(client, sortTripDto, filtrTripClientDto, paginationDto);
 		return list;
 	}
 
@@ -139,20 +108,8 @@ public class TripServiceImpl {
 	 * @return collection trip
 	 *
 	 */
-	public List<Trip> sortTrip(SortTripDto sortTripDto, FiltrTripClientDto filtrTripClientDto, Client client,int max)
-		{
-		FiltrTrip filtrOrder = null;
-		List<Trip> list = null;
-		if (filtrTripClientDto != null) {
-			filtrOrder = new FiltrTrip();
-			filtrOrder.setDateBegin(filtrTripClientDto.getDateBegin());
-			filtrOrder.setDateFinish(filtrTripClientDto.getDateFinish());
-			filtrOrder.setTarget(filtrTripClientDto.getTarget());
-		}
-		SortTrip sortTrip = new SortTrip();
-		sortTrip.setColumn(sortTripDto.getColumn());
-		sortTrip.setOrderColumn(sortTripDto.getOrderColumn());
-		list = mySqlTripDao.sortTripClient(sortTrip, filtrOrder, client,max);
+	public List<Trip> sortTrip(SortTripDto sortTrip, FilterTripClientDto filtrTripClientDto, Client client, int max) {
+		List<Trip> list = mySqlTripDao.sortTripClient(sortTrip, filtrTripClientDto, client, max);
 		return list;
 	}
 
@@ -163,23 +120,8 @@ public class TripServiceImpl {
 	 * @return collection trip
 	 * 
 	 */
-	public List<Trip> filtrTrip(Client client, FiltrTripClientDto filtrTripClientDto, SortTripDto sortTripDto)
-		{
-		List<Trip> tripsDefine = null;
-		FiltrTrip filtrTrip = null;
-		SortTrip sortTrip = null;
-		if (filtrTripClientDto != null) {
-			filtrTrip = new FiltrTrip();
-			filtrTrip.setDateBegin(filtrTripClientDto.getDateBegin());
-			filtrTrip.setDateFinish(filtrTripClientDto.getDateFinish());
-			filtrTrip.setTarget(filtrTripClientDto.getTarget());
-		}
-		if (sortTripDto != null) {
-			sortTrip = new SortTrip();
-			sortTrip.setColumn(sortTripDto.getColumn());
-			sortTrip.setOrderColumn(sortTripDto.getOrderColumn());
-		}
-		tripsDefine = mySqlTripDao.getFiltrTrips(client, filtrTrip, sortTrip);
+	public List<Trip> filtrTrip(Client client, FilterTripClientDto filtrTripClientDto, SortTripDto sortTripDto) {
+		List<Trip> tripsDefine = mySqlTripDao.getFiltrTrips(client, filtrTripClientDto, sortTripDto);
 		return tripsDefine;
 	}
 

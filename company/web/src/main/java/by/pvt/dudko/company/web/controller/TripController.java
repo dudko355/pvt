@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import by.pvt.dudko.company.dto.FiltrTripClientDto;
+import by.pvt.dudko.company.dto.FilterTripClientDto;
 import by.pvt.dudko.company.dto.PaginationDto;
 import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Client;
@@ -22,7 +22,7 @@ import by.pvt.dudko.company.entities.Trip;
 import by.pvt.dudko.company.exception.ServiceException;
 import by.pvt.dudko.company.service.TripServiceImpl;
 import by.pvt.dudko.company.util.UtilDate;
-import by.pvt.dudko.company.web.impl.constant.ConstantsPages;
+import by.pvt.dudko.company.web.constant.ConstantsPages;
 
 @Controller
 @RequestMapping("/trip")
@@ -35,7 +35,7 @@ public class TripController {
 	@RequestMapping(value = "/filtr", method = RequestMethod.POST)
 	public String filtrTrip(Model model, HttpServletRequest request){
 		String page = null;
-		FiltrTripClientDto filtrTripClientDto = new FiltrTripClientDto();
+		FilterTripClientDto filtrTripClientDto = new FilterTripClientDto();
 		String dateBegin = request.getParameter("dateBegin").trim();
 		String dateFinish = request.getParameter("dateFinish").trim();
 		if (!dateBegin.equals("")) {
@@ -62,7 +62,7 @@ public class TripController {
 		SortTripDto sortTripDto = new SortTripDto();
 		sortTripDto.setOrderColumn(request.getParameter("order").trim());
 		sortTripDto.setColumn(request.getParameter("source").trim());
-		FiltrTripClientDto filtrTripClientDto = (FiltrTripClientDto) request.getSession().getAttribute("filtr");
+		FilterTripClientDto filtrTripClientDto = (FilterTripClientDto) request.getSession().getAttribute("filtr");
 		Client client = (Client) request.getSession().getAttribute("USER");
 		PaginationDto paginationDto=(PaginationDto) request.getSession().getAttribute("pagination");
 		List<Trip> nextTrips = tripServiceImpl.sortTrip(sortTripDto, filtrTripClientDto, client,paginationDto.getCount());
@@ -77,7 +77,7 @@ public class TripController {
 		int amount = Integer.parseInt(request.getParameter("element").trim());
 		Client client = (Client) request.getSession().getAttribute("USER");
 		SortTripDto sortTripDto = (SortTripDto) request.getSession().getAttribute("source");
-		FiltrTripClientDto filtrTripClientDto = (FiltrTripClientDto) request.getSession().getAttribute("filtr");
+		FilterTripClientDto filtrTripClientDto = (FilterTripClientDto) request.getSession().getAttribute("filtr");
 		PaginationDto paginationDto = (PaginationDto) request.getSession().getAttribute("pagination");
 		int allPage = tripServiceImpl.amountPages(paginationDto, amount);
 		PaginationDto paginationDtoTwo = new PaginationDto(paginationDto.getAllCount(), allPage, amount, 1, 0);
@@ -94,7 +94,7 @@ public class TripController {
 		int number = Integer.parseInt(request.getParameter("next_page").trim());
 		PaginationDto paginationDto = (PaginationDto) request.getSession().getAttribute("pagination");
 		Client client = (Client) request.getSession().getAttribute("USER");
-		FiltrTripClientDto filtrTripClientDto = (FiltrTripClientDto) request.getSession().getAttribute("filtr");
+		FilterTripClientDto filtrTripClientDto = (FilterTripClientDto) request.getSession().getAttribute("filtr");
 		SortTripDto sortTripDto = (SortTripDto) request.getSession().getAttribute("source");
 		paginationDto = tripServiceImpl.nextPage(paginationDto, number);
 		List<Trip> tripsDefine = tripServiceImpl.pagination(client, sortTripDto, filtrTripClientDto, paginationDto);

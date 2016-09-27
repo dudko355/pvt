@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import by.pvt.dudko.company.dto.ClientDto;
-import by.pvt.dudko.company.dto.FiltrTripClientDto;
+import by.pvt.dudko.company.dto.FilterTripClientDto;
 import by.pvt.dudko.company.dto.OrderDto;
 import by.pvt.dudko.company.dto.PaginationDto;
 import by.pvt.dudko.company.dto.SortTripDto;
@@ -35,7 +35,7 @@ import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
 import by.pvt.dudko.company.service.TripServiceImpl;
 import by.pvt.dudko.company.util.UtilDate;
-import by.pvt.dudko.company.web.impl.constant.ConstantsPages;
+import by.pvt.dudko.company.web.constant.ConstantsPages;
 
 @Controller
 @RequestMapping("/client")
@@ -124,7 +124,7 @@ public class ClientController {
 		String page = null;
 		Client client = (Client) request.getSession().getAttribute("USER");
 		SortTripDto sortTripDto = (SortTripDto) request.getSession().getAttribute("source");
-		FiltrTripClientDto filtrTripClientDto = (FiltrTripClientDto) request.getSession().getAttribute("filtr");
+		FilterTripClientDto filtrTripClientDto = (FilterTripClientDto) request.getSession().getAttribute("filtr");
 		PaginationDto paginationDto = (PaginationDto) request.getSession().getAttribute("pagination");
 		List<Trip> tripsDefine = tripServiceImpl.pagination(client, sortTripDto, filtrTripClientDto, paginationDto);
 		request.setAttribute("trips", tripsDefine);
@@ -140,7 +140,7 @@ public class ClientController {
 		SortTripDto sortTripDto=new SortTripDto("ASC","conditionTrip");
 		request.getSession().setAttribute("pagination", paginationDto);
 		request.setAttribute("trips", trips);
-		request.getSession().setAttribute("filtr", new FiltrTripClientDto());
+		request.getSession().setAttribute("filtr", new FilterTripClientDto());
 		request.getSession().setAttribute("source",sortTripDto );
 		page = ConstantsPages.ORDERS;
 		return page;

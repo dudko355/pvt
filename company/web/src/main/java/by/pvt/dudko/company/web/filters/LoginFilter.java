@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 
+import by.pvt.dudko.company.web.util.EqualsUrl;
+
 public class LoginFilter implements Filter {
 	private static final Logger log = Logger.getLogger(LoginFilter.class);
 
@@ -25,24 +27,16 @@ public class LoginFilter implements Filter {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		HttpSession session = request.getSession();
-		String path = request.getContextPath();
-		String indexURI = path + "/index";
-		String startURI = path + "/start_page";
-		String loginURI = path + "/login";
-		String registrationURI = path + "/registration";
-		String errorURI = path + "/error";
-		String adminURI = path + "/admin/admin";
-		String localeURI = path + "/locale";
-		String pictureURI = path + "/resources/fon.jpg";
-
+		String urlRequest = request.getRequestURI();
 		boolean skip = (session != null) && (session.getAttribute("USER") != null);
 		boolean enter = "enter".equals(request.getParameter("page"));
-		boolean loginRequest = (loginURI.equals(request.getRequestURI())
-				|| registrationURI.equals(request.getRequestURI()) || startURI.equals(request.getRequestURI())
-				|| errorURI.equals(request.getRequestURI())) || indexURI.equals(request.getRequestURI())
-				|| localeURI.equals(request.getRequestURI()) || adminURI.equals(request.getRequestURI())
-				|| pictureURI.equals(request.getRequestURI());
-
+		boolean loginRequest = false;
+		for (String url : EqualsUrl.urlEquals(request)) {
+			if (urlRequest.equals(url)) {
+				loginRequest = true;
+				break;
+			}
+		}
 		if (skip || loginRequest || enter) {
 			chain.doFilter(request, response);
 		} else {

@@ -12,10 +12,10 @@ import org.springframework.stereotype.Repository;
 import by.pvt.dudko.company.dao.BaseDao;
 import by.pvt.dudko.company.dao.IOrderDao;
 import by.pvt.dudko.company.dao.ITripDao;
+import by.pvt.dudko.company.dto.FilterTripClientDto;
+import by.pvt.dudko.company.dto.PaginationDto;
+import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Client;
-import by.pvt.dudko.company.entities.FiltrTrip;
-import by.pvt.dudko.company.entities.Pagination;
-import by.pvt.dudko.company.entities.SortTrip;
 import by.pvt.dudko.company.entities.Trip;
 
 @Repository
@@ -35,7 +35,7 @@ public class MySqlTripDao extends BaseDao<Trip> implements ITripDao{
 		return trips;
 	}
 
-	public List<Trip> sortTripClient(SortTrip sortOrder, FiltrTrip filtrOrder, Client client,int max) {
+	public List<Trip> sortTripClient(SortTripDto sortOrder, FilterTripClientDto filtrOrder, Client client,int max) {
 		Criteria criteria = null;
 		if (filtrOrder == null) {
 			criteria = criteriaOrder(sortOrder, client);
@@ -50,13 +50,13 @@ public class MySqlTripDao extends BaseDao<Trip> implements ITripDao{
 		return trips;
 	}
 
-	private Criteria criteriaOrder(SortTrip sortOrder, Client client) {
+	private Criteria criteriaOrder(SortTripDto sortOrder, Client client) {
 		Criteria criteria = criteriaStartClientTrip(client);
 		criteriaSort(criteria, sortOrder);
 		return criteria;
 	}
 
-	private Criteria criteriaSort(Criteria criteria, SortTrip sortOrder) {
+	private Criteria criteriaSort(Criteria criteria, SortTripDto sortOrder) {
 		if (sortOrder.getOrderColumn().equals("ASC")) {
 			criteria.addOrder(Order.asc(sortOrder.getColumn()));
 		} else {
@@ -70,22 +70,22 @@ public class MySqlTripDao extends BaseDao<Trip> implements ITripDao{
 		return criteria.add(Restrictions.eq("idClient", client.getIdClient()));
 	}
 
-	private Criteria criteriaStartClientTripAmountNext(Pagination pagination, Client client) {
+	private Criteria criteriaStartClientTripAmountNext(PaginationDto pagination, Client client) {
 		Criteria criteria = criteriaStartClientTrip(client);
 		criteria.setFirstResult(pagination.getStart());
-		criteria.setMaxResults(pagination.getAmount());
+		criteria.setMaxResults(pagination.getCount());
 		return criteria;
 
 	}
 
-	private Criteria criteriaOrderDate(FiltrTrip filtrOrder, Criteria criteria) {
+	private Criteria criteriaOrderDate(FilterTripClientDto filtrOrder, Criteria criteria) {
 		criteria.add(Restrictions.gt("dateBegin", filtrOrder.getDateBegin()));
 		criteria.add(Restrictions.lt("dateFinish", filtrOrder.getDateFinish()));
 		return criteria;
 	}
 
 
-	public List<Trip> paginationDao(Client client, SortTrip sortTrip, FiltrTrip filtrOrder, Pagination pagination) {
+	public List<Trip> paginationDao(Client client, SortTripDto sortTrip, FilterTripClientDto filtrOrder, PaginationDto pagination) {
 		Criteria criteria = criteriaStartClientTripAmountNext(pagination, client);
 		if (sortTrip != null) {
 			criteria = criteriaSort(criteria, sortTrip);
@@ -102,7 +102,7 @@ public class MySqlTripDao extends BaseDao<Trip> implements ITripDao{
 	}
 
 
-	public List<Trip> getFiltrTrips(Client client, FiltrTrip filtrTrip, SortTrip sortTrip) {
+	public List<Trip> getFiltrTrips(Client client, FilterTripClientDto filtrTrip, SortTripDto sortTrip) {
 		Criteria criteria = criteriaStartClientTrip(client);
 		criteria = criteriaOrderDate(filtrTrip, criteria);
 		if (!filtrTrip.getTarget().equals("")) {

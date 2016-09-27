@@ -2,10 +2,10 @@ package by.pvt.dudko.company.dao;
 
 import java.util.List;
 
+import by.pvt.dudko.company.dto.FilterTripClientDto;
+import by.pvt.dudko.company.dto.PaginationDto;
+import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Client;
-import by.pvt.dudko.company.entities.FiltrTrip;
-import by.pvt.dudko.company.entities.Pagination;
-import by.pvt.dudko.company.entities.SortTrip;
 import by.pvt.dudko.company.entities.Trip;
 
 public interface ITripDao extends IDao<Trip>{
@@ -18,23 +18,23 @@ public interface ITripDao extends IDao<Trip>{
 	public List<Trip> getTripsClient(Client client);
 	/**
 	 * 
-	 * @param object SortTrip ,object FiltrTrip,object client,max count element on the page
+	 * @param object SortTripDto ,object FiltrTripDto,object client,max count element on the page
 	 * @return collection trip
 	 * @throws DataAccessException(Spring)
 	 */
-	public List<Trip> sortTripClient(SortTrip sortOrder, FiltrTrip filtrOrder, Client client,int max);
+	public List<Trip> sortTripClient(SortTripDto sortOrder, FilterTripClientDto filtrOrder, Client client,int max);
 	/**
 	 * 
-	 * @param object Client ,object SortTrip,object FiltrTripClient,object Pagination
+	 * @param object Client ,object SortTripDto,object FiltrTripClientDto,object PaginationDto
 	 * @return collection trip
 	 * @throws DataAccessException(Spring)
 	 */
-	public List<Trip> paginationDao(Client client, SortTrip sortTrip, FiltrTrip filtrOrder, Pagination pagination);
+	public List<Trip> paginationDao(Client client, SortTripDto sortTrip, FilterTripClientDto filtrOrder, PaginationDto pagination);
 	/**
 	 * 
-	 * @param object Client ,filtrTrip,sortTrip
+	 * @param object Client ,filtrTrip,sortTripDto
 	 * @return collection trip
 	 * @throws DataAccessException(Spring)
 	 */
-	public List<Trip> getFiltrTrips(Client client, FiltrTrip filtrTrip, SortTrip sortTrip);
+	public List<Trip> getFiltrTrips(Client client, FilterTripClientDto filtrTrip, SortTripDto sortTrip);
 }

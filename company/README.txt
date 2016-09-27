@@ -1,17 +1,22 @@
-Motor depot version 1.0 22/09/2016
+Motor depot version 1.0 27/09/2016
 =======================================================================
 Voice: +375(29) 6501403
 E-mail: Dudko355@Gmail.com
 =======================================================================
-On this website you can register your trip and specify the
-parameters of cargo (weight, volume) , number of seats,
-direction. Also you need specify start date and finish date.
-Website will determine a car.You can delete the trip if it does't start.
+The main idea of the project is to automate managing of clients demand 
+and choosing car. You can login in application.Also you can book trip for 
+moving your cargo. You have to give the information about cargo and time. 
+The system will find a suitable car for you. You can cancel the trip if you  
+change you mind. During entering the data into form be attentive. Date of   
+the beginning should be after today date and before date of the finish.  
+Also you can watch the list your orders,sort and filter it. You can delete 
+your account if you have no planned trips. 
 
-If you are an administrator, you can view all information about 
-motor depot (broken machines, a list of drivers, all trips, etc.).
-Also you can change the status of the machine and the trip of any  
-the clients.
+If you are administrator, you can watch information about this motor deport. 
+You can see list of the broken car, list of trips, list of the drivers  and 
+list of the car which in trip now. If a car is broken you can change the
+status car "on broken".And this car will be exclude from the list of the 
+working. Also administrator can change status of the trips. 
 ========================================================================
 Your computer should have next tools to deploy this application:
 1)Apache Tomcat Version 8.0.36 http://tomcat.apache.org/
@@ -20,7 +25,7 @@ Your computer should have next tools to deploy this application:
 4)MySql 5.6                    http://dev.mysql.com/
 =========================================================================
 You need to do next steps before deploy:
-1)turn on internet
+1)turn on the Internet
 2)Open the file settings.xml in your maven(...\maven3.3.9\conf\settings.xml) 
 and write inside the tag <servers>
      <server>

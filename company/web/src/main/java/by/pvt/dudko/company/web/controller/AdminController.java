@@ -26,7 +26,7 @@ import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.DriverServerImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
 import by.pvt.dudko.company.service.TripServiceImpl;
-import by.pvt.dudko.company.web.impl.constant.ConstantsPages;
+import by.pvt.dudko.company.web.constant.ConstantsPages;
 
 @Controller
 @RequestMapping("/admin")

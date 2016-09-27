@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import by.pvt.dudko.company.dto.ClientDto;
 import by.pvt.dudko.company.exception.ServiceException;
-import by.pvt.dudko.company.web.impl.constant.ConstantsPages;
+import by.pvt.dudko.company.web.constant.ConstantsPages;
 
 
 @Controller
