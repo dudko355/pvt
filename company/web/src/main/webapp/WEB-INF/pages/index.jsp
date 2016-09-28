@@ -16,7 +16,7 @@ a,h1{
 }
 a:link, a:visited {
     background-color: #A9A9A9;
-    color: white;
+    color: #000000;
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;

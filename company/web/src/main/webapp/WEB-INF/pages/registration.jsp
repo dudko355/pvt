@@ -22,7 +22,7 @@ input[type=text], input[type=password] {
 input[type=submit] {
     width: 28%;
     background-color: #D2B48C;
-    color: white;
+    color: #000000;
     padding: 14px 20px;
     margin: 8px 0;
     border: none;

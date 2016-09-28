@@ -10,7 +10,7 @@
 button,input[type=submit] {
     background-color: #CD853F
     border: none;
-    color: white;
+    color: #000000;
     padding: 10px 20px;
     text-decoration: none;
     margin: 2px 1px;
