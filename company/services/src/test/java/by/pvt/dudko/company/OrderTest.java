@@ -50,17 +50,6 @@ public class OrderTest {
 	private IOrderService orderServiceImpl;
 	private static Logger log = Logger.getLogger(OrderTest.class);
 	
-	@Before
-	public void init() {
-		
-	}
-
-	@After
-	public void destroy() {
-		orderServiceImpl = null;
-		carServiceImpl=null;
-		clientServiceImpl=null;
-      }
 	
 	@Test
 	public void testGetAllOrder() {

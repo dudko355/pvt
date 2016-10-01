@@ -46,27 +46,26 @@ public class TripServiceImpl  implements ITripService {
 
 
 	public List<Trip> allTrip() {
-		List<Trip> list = tripDao.getAll();
-		return list;
+		return tripDao.getAll();
 	}
 
 	public int amountPages(PaginationDto paginationDto, int amount) {
-		int allPage = 1;
+
 		if (paginationDto.getAllCount() % amount == 0) {
-			allPage = paginationDto.getAllCount() / amount;
+			return paginationDto.getAllCount() / amount;
 		} else {
-			allPage = (int) paginationDto.getAllCount() / amount + 1;
+			return (int) paginationDto.getAllCount() / amount + 1;
 		}
-		return allPage;
 	}
 
 	public PaginationDto nextPage(PaginationDto paginationDto, int number) {
+		//the first position(with a starting element)
 		int start = 0;
 		if (number == 1) {
 			start = paginationDto.getStart() + paginationDto.getCount();
 			paginationDto.setStart(start);
 			paginationDto.setPage(paginationDto.getPage() + 1);
-		} else if (number == 0) {
+		} else {
 			start = paginationDto.getStart() - paginationDto.getCount();
 			paginationDto.setStart(start);
 			paginationDto.setPage(paginationDto.getPage() - 1);
@@ -76,43 +75,32 @@ public class TripServiceImpl  implements ITripService {
 	}
 
 	public int existTripClient(List<Trip> trips) {
-		int i = 0;
+		int statusEndedTrip=1;
+		int countTripNotStarted = 0;
 		for (Trip trip : trips) {
-			if (trip.getConditionTrip() == (1)) {
+			if (trip.getConditionTrip() == statusEndedTrip) {
 				deleteTrip(trip);
 			} else {
-				i = i + 1;
+				countTripNotStarted = countTripNotStarted + 1;
 			}
 		}
-		return i;
+		return countTripNotStarted;
 
 	}
 
-	/**
-	 * 
-	 * @param object
-	 *            Client ,object SortTripDto,object FiltrTripClientDto,object
-	 *            PaginationDto
-	 * @return collection trip
-	 * 
-	 */
 	public List<Trip> pagination(Client client, SortTripDto sortTripDto, FilterTripClientDto filtrTripClientDto,
 			PaginationDto paginationDto) {
-
-		List<Trip> list = tripDao.paginationDao(client, sortTripDto, filtrTripClientDto, paginationDto);
-		return list;
+		return tripDao.paginationDao(client, sortTripDto, filtrTripClientDto, paginationDto);
 	}
 
 
 	public List<Trip> sortTrip(SortTripDto sortTrip, FilterTripClientDto filtrTripClientDto, Client client, int max) {
-		List<Trip> list = tripDao.sortTripClient(sortTrip, filtrTripClientDto, client, max);
-		return list;
+		return tripDao.sortTripClient(sortTrip, filtrTripClientDto, client, max);
 	}
 
 
-	public List<Trip> filtrTrip(Client client, FilterTripClientDto filtrTripClientDto, SortTripDto sortTripDto) {
-		List<Trip> tripsDefine = tripDao.getFiltrTrips(client, filtrTripClientDto, sortTripDto);
-		return tripsDefine;
+	public List<Trip> filterTrip(Client client, FilterTripClientDto filtrTripClientDto, SortTripDto sortTripDto) {
+		return tripDao.getFiltrTrips(client, filtrTripClientDto, sortTripDto);
 	}
 
 
@@ -138,14 +126,12 @@ public class TripServiceImpl  implements ITripService {
 
 
 	public List<Trip> getTripUser(Client client) {
-		List<Trip> list = tripDao.getTripsClient(client);
-		return list;
+		return tripDao.getTripsClient(client);
 	}
 
 
 	public Trip getTrip(int idTrip) {
-		Trip trip = (Trip) tripDao.get(idTrip);
-		return trip;
+		return (Trip) tripDao.get(idTrip);
 	}
 
 }

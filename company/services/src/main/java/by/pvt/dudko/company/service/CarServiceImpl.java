@@ -40,14 +40,11 @@ public class CarServiceImpl implements ICarService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Car> getAllCar() {
-		List<Car> list = carDao.getAll();
-		return list;
-
+		return carDao.getAll();
 	}
 
 
 	public boolean checkListTripsOnCoincidenceDatesWithOrder(Set<Trip> list, Order order) {
-		boolean notCoincidence = false;
 		int amount = 0;
 		for (Trip trip : list) {
 			if (trip.getDateStart().after(order.getPropertiesOrder().getDateFinish())
@@ -55,11 +52,7 @@ public class CarServiceImpl implements ICarService {
 				amount = amount + 1;
 			}
 		}
-		if (amount == list.size()) {
-			notCoincidence = true;
-		}
-		return notCoincidence;
-
+		return amount == list.size();
 	}
 
 
@@ -72,9 +65,7 @@ public class CarServiceImpl implements ICarService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Car getCar(int key) {
-		Car car = (Car) carDao.get(key);
-		return car;
-
+		return (Car) carDao.get(key);
 	}
 
 

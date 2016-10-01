@@ -45,6 +45,7 @@ public class Trip implements Serializable {
 	private Date dateStart;
 	@Column(name = "dateFinish")
 	private Date dateFinish;
+	//-1 - the trip hasn't started, 0 - the trip is starting, 1 - the trip ended
 	@Column(name = "conditionTrip")
 	private int conditionTrip;
 	@OneToOne

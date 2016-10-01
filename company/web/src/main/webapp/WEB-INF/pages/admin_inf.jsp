@@ -93,7 +93,7 @@ body {
 		 
 	</nav>
 	</div>
-	<h5><fmt:message key="clickInf" /></h5>
+	<h4><fmt:message key="clickInf" /></h4>
 	<div id="tabl" ><fmt:message key="ccarRepain" /></div>
 		<div id="carRepair">
 			<table>

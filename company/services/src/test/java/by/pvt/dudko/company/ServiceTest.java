@@ -50,15 +50,7 @@ public class ServiceTest {
 	private IServiceService serviceImpl;
 	private static Logger log = Logger.getLogger(ServiceTest.class);
 
-	@Before
-	public void init() {
 
-	}
-
-	@After
-	public void destroy() {
-
-	}
 
 	@Test(expected = ServiceException.class)
 	public void testTransactionSaveTripError() throws ServiceException{

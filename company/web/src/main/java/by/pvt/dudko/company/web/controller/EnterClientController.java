@@ -66,7 +66,7 @@ public class EnterClientController {
 	@ExceptionHandler(Exception.class)
 	public ModelAndView allException(Exception e) {
 		log.error("error", e);
-		ModelAndView model = new ModelAndView("error_two");
+		ModelAndView model = new ModelAndView("exception_handler");
 		model.addObject("ERROR", "errorText");
 		return model;
 
@@ -75,9 +75,8 @@ public class EnterClientController {
 	@ExceptionHandler(DataAccessException.class)
 	public ModelAndView serviceException(Exception e) {
 		log.error("error", e);
-		ModelAndView model = new ModelAndView("error_two");
+		ModelAndView model = new ModelAndView("exception_handler");
 		model.addObject("ERROR", "dataBaseError");
-		
 		return model;
 	}
 }

@@ -41,7 +41,6 @@ public class TripController {
 
 	@RequestMapping(value = "/filtr", method = RequestMethod.POST)
 	public String filtrTrip(Model model, HttpServletRequest request) throws Exception{
-		String page = null;
 		FilterTripClientDto filtrTripClientDto = new FilterTripClientDto();
 		String dateStart = request.getParameter("dateStart").trim();
 		String dateFinish = request.getParameter("dateFinish").trim();
@@ -54,18 +53,16 @@ public class TripController {
 		filtrTripClientDto.setTripTarget(request.getParameter("target").trim());
 		Client client = (Client) request.getSession().getAttribute("USER");
 		SortTripDto sortTripDto = (SortTripDto) request.getSession().getAttribute("source");
-		List<Trip> tripsDefine = tripServiceImpl.filtrTrip(client, filtrTripClientDto, sortTripDto);
+		List<Trip> tripsDefine = tripServiceImpl.filterTrip(client, filtrTripClientDto, sortTripDto);
 		PaginationDto paginationDto = new PaginationDto(tripsDefine.size(), 1, tripsDefine.size(), 1, 0);
 		request.getSession().setAttribute("filtr", filtrTripClientDto);
 		request.getSession().setAttribute("pagination", paginationDto);
 		request.setAttribute("trips", tripsDefine);
-		page = ConstantsPages.ORDERS;
-		return page;
+		return ConstantsPages.ORDERS;
 	}
 
 	@RequestMapping(value = "/sort", method = RequestMethod.POST)
 	public String sortTrip(Model model, HttpServletRequest request) {
-		String page = null;
 		SortTripDto sortTripDto = new SortTripDto();
 		sortTripDto.setOrderColumn(request.getParameter("order").trim());
 		sortTripDto.setColumn(request.getParameter("source").trim());
@@ -75,12 +72,11 @@ public class TripController {
 		List<Trip> nextTrips = tripServiceImpl.sortTrip(sortTripDto, filtrTripClientDto, client,paginationDto.getCount());
 		request.setAttribute("trips", nextTrips);
 		request.getSession().setAttribute("source", sortTripDto);
-		return page = ConstantsPages.ORDERS;
+		return ConstantsPages.ORDERS;
 	}
 
 	@RequestMapping(value = "/amount", method = RequestMethod.GET)
 	public String amountElementPage(Model model, HttpServletRequest request){
-		String page = null;
 		int amount = Integer.parseInt(request.getParameter("element").trim());
 		Client client = (Client) request.getSession().getAttribute("USER");
 		SortTripDto sortTripDto = (SortTripDto) request.getSession().getAttribute("source");
@@ -91,13 +87,12 @@ public class TripController {
 		List<Trip> tripsDefine = tripServiceImpl.pagination(client, sortTripDto, filtrTripClientDto, paginationDtoTwo);
 		request.setAttribute("trips", tripsDefine);
 		request.getSession().setAttribute("pagination", paginationDtoTwo);
-		return page = ConstantsPages.ORDERS;
+		return ConstantsPages.ORDERS;
 
 	}
 
 	@RequestMapping(value = "/next_page", method = RequestMethod.GET)
 	public String nextPage(Model model, HttpServletRequest request) {
-		String page = null;
 		int number = Integer.parseInt(request.getParameter("next_page").trim());
 		PaginationDto paginationDto = (PaginationDto) request.getSession().getAttribute("pagination");
 		Client client = (Client) request.getSession().getAttribute("USER");
@@ -107,25 +102,23 @@ public class TripController {
 		List<Trip> tripsDefine = tripServiceImpl.pagination(client, sortTripDto, filtrTripClientDto, paginationDto);
 		request.getSession().setAttribute("pagination", paginationDto);
 		request.setAttribute("trips", tripsDefine);
-		return page = ConstantsPages.ORDERS;
+		return ConstantsPages.ORDERS;
 
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView allException(Exception e) {
 		log.error("error", e);
-		ModelAndView model = new ModelAndView("error_two");
+		ModelAndView model = new ModelAndView("exception_handler");
 		model.addObject("ERROR", "errorText");
 		return model;
-
 	}
 	
 	@ExceptionHandler(DataAccessException.class)
 	public ModelAndView serviceException(Exception e) {
 		log.error("error", e);
-		ModelAndView model = new ModelAndView("error_two");
+		ModelAndView model = new ModelAndView("exception_handler");
 		model.addObject("ERROR", "dataBaseError");
-		
 		return model;
 	}
 

@@ -46,18 +46,8 @@ public class AdminTest {
 	private IOrderService orderServiceImpl;
 	private static Logger log = Logger.getLogger(AdminTest.class);
 	
-	@Before
-	public void init() {
-
-	}
-
-	@After
-	public void destroy() {
-   
-	}
 	
 	@Test
-	
 	public void testSelectCar() {
 		try {
 			OrderDto orderDto=new OrderDto();

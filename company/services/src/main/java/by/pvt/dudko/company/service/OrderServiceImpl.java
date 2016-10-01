@@ -49,8 +49,7 @@ public class OrderServiceImpl implements IOrderService{
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Order> getAllOrder() {
-		List<Order> list = orderDao.getAll();
-		return list;
+		return orderDao.getAll();
 	}
 
 	
@@ -58,9 +57,9 @@ public class OrderServiceImpl implements IOrderService{
 	public int estimateDateOrder(OrderDto orderDto, Client client) {
 		int result = DATE_INCORRECT;
 		Date date = new Date();
+		Date dateBegin=CompanyDateUtil.date(orderDto.getDateStart());
+		Date dateFinish=CompanyDateUtil.date(orderDto.getDateFinish());
 		try {
-			Date dateBegin=CompanyDateUtil.date(orderDto.getDateStart());
-			Date dateFinish=CompanyDateUtil.date(orderDto.getDateFinish());
 			if (dateFinish.after(dateBegin) && dateBegin.after(date)) {
 				result = DATE_CORRECT;
 			} else {
@@ -75,8 +74,8 @@ public class OrderServiceImpl implements IOrderService{
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getNumberNextTrip() {
-		int idOrder = orderDao.getMaxIdOrder() + 1;
-		return idOrder;
+		return (orderDao.getMaxIdOrder() + 1);
+
 	}
 
 
@@ -104,7 +103,7 @@ public class OrderServiceImpl implements IOrderService{
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Order getOrder(int idOrder) {
-		Order order = (Order) orderDao.get(idOrder);
-		return order;
+		return (Order) orderDao.get(idOrder);
 	}
+	
 }

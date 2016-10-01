@@ -31,11 +31,11 @@ h2,h1{
 			<fmt:message key="error" />
 		</h1>
 	</header>
-<!--  	<nav>
+  	<nav>
 		<a href="${pageContext.servletContext.contextPath}/${URL}"><button>
 				<fmt:message key="back" />
 			</button></a>
-	</nav>-->
+	</nav>
 		<div>
 			<h2>
 			   <fmt:message key="${ERROR}" />

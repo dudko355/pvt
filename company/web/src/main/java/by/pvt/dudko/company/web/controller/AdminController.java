@@ -58,11 +58,9 @@ public class AdminController {
 
 	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String adminPages(Model model, HttpServletRequest request){
-		String page = null;
 		Client admin = clientServiceImpl.getClient(ADMIN_ROLE_ID);
-		page = ConstantsPages.PAGES_ADMIN;
 		request.getSession().setAttribute("USER", admin);
-		return page;
+		return ConstantsPages.PAGES_ADMIN;
 	}
 
 	@RequestMapping(value = "/exit", method = RequestMethod.GET)
@@ -78,64 +76,53 @@ public class AdminController {
 
 	@RequestMapping(value = "/trip", method = RequestMethod.GET)
 	public String adminTripInf(Model model){
-		String page = null;
 		List<Trip> trips = tripServiceImpl.allTrip();
 		model.addAttribute("ALLTRIP", trips);
-		page = ConstantsPages.CHANGE_TRIP;
-		return page;
+		return ConstantsPages.CHANGE_TRIP;
 	}
 
 	@RequestMapping(value = "/trip_cond", method = RequestMethod.POST)
 	public String changeTripCondition(Model model, HttpServletRequest request){
-		String page = null;
 		int idOrder = Integer.parseInt((request.getParameter("change_condition")));
 		int newCond = Integer.parseInt((request.getParameter("condition")).trim());
 		Trip trip = tripServiceImpl.getTrip(idOrder);
 		tripServiceImpl.changeCondTrip(trip, newCond);
 		List<Trip> trips = tripServiceImpl.allTrip();
 		model.addAttribute("ALLTRIP", trips);
-		page = ConstantsPages.CHANGE_TRIP;
-		return page;
+		return ConstantsPages.CHANGE_TRIP;
 	}
 
 	@RequestMapping(value = "/car", method = RequestMethod.GET)
 	public String adminCarInf(Model model) {
-		String page = null;
 		model.addAttribute("ALLCAR", carServiceImpl.getAllCar());
-		page = ConstantsPages.CHANGE_CAR_COND;
-		return page;
+		return ConstantsPages.CHANGE_CAR_COND;
 	}
 
 	@RequestMapping(value = "/car_cond", method = RequestMethod.POST)
 	public String changeCarCondition(Model model, HttpServletRequest request){
-		String page = null;
 		int idCar = Integer.parseInt((request.getParameter("change_condition")));
 		int newCond = Integer.parseInt((request.getParameter("condition")).trim());
 		Car car = carServiceImpl.getCar(idCar);
 		carServiceImpl.changeCarCondition(car, newCond);
 		model.addAttribute("ALLCAR", carServiceImpl.getAllCar());
-		page = ConstantsPages.CHANGE_CAR_COND;
-		return page;
+		return ConstantsPages.CHANGE_CAR_COND;
 	}
 
 
 	@RequestMapping(value = "/inf", method = RequestMethod.GET)
 	public String adminInf(Model model, HttpServletRequest request) {
-		String page = null;
 		model.addAttribute("CARS", adminServiceImpl.getBrokenCars());
 		model.addAttribute("DRIVER", driverServerImpl.allDriver());
 		model.addAttribute("ALLTRIP", tripServiceImpl.allTrip());
 		List<Car> list = adminServiceImpl.getBusyCar();
 		model.addAttribute("CARTRIP", list);
-		page = ConstantsPages.ADMIN_INF;
-		return page;
-
+		return ConstantsPages.ADMIN_INF;
 	}
 
 	@ExceptionHandler(Exception.class)
 	public ModelAndView allException(Exception e) {
 		log.error("error", e);
-		ModelAndView model = new ModelAndView("error_two");
+		ModelAndView model = new ModelAndView("exception_handler");
 		model.addObject("ERROR", "errorText");
 		return model;
 
@@ -144,7 +131,7 @@ public class AdminController {
 	@ExceptionHandler(DataAccessException.class)
 	public ModelAndView serviceException(Exception e) {
 		log.error("error", e);
-		ModelAndView model = new ModelAndView("error_two");
+		ModelAndView model = new ModelAndView("exception_handler");
 		model.addObject("ERROR", "dataBaseError");
 		return model;
 	}

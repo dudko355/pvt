@@ -34,15 +34,6 @@ public class ClientTest {
 	private IClientService clientServiceImpl;
 	private static Logger log = Logger.getLogger(ClientTest.class);
 	
-	@Before
-	public void init() {
-	
-	}
-
-	@After
-	public void destroy() {
-	        
-	}
 	
 	@Test
 	public void testGetAllClient() {

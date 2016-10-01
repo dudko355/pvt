@@ -68,7 +68,6 @@ public class AdminServiceImpl implements IAdminService {
 	}
 
 	public Car selectCar(Order order) throws ServiceException {
-		List<Car> list = new ArrayList<Car>();
 		Car car = null;
 		List<Car> cars = carServise.getAllCar();
 		for (Car car1 : cars) {

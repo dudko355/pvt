@@ -7,13 +7,13 @@ package by.pvt.dudko.company.dto;
 public class PaginationDto {
 	// count element on the page
 	private int count;
-	// the first
+	//the first position(with a starting element)
 	private int start;
 	// number of page
 	private int page;
 	// count page
 	private int allPage;
-	//count element
+	//count element in list
 	private int allCount;
 
 	public PaginationDto(int allAmount, int allPage, int amount, int page, int start) {

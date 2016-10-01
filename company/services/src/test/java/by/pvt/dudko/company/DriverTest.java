@@ -33,15 +33,6 @@ public class DriverTest {
 	private IDriverService driverServerImpl;
 	private static Logger log = Logger.getLogger(DriverTest.class);
 	
-	@Before
-	public void init() {
-		
-	}
-
-	@After
-	public void destroy() {
-	
-       }
 	
 	@Test
 	public void testGetAllDriver() {

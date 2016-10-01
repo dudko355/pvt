@@ -14,7 +14,7 @@ public interface IServiceService {
 	 * 
 	 * @param client,orderDto
 	 * @throws ServiceException
-	 * @throws DateException 
+	 * 
 	 */
 	public Car transactionSaveTrip(Client client, OrderDto orderDto) throws ServiceException;
 }

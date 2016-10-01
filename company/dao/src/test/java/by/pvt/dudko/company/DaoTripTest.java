@@ -43,15 +43,6 @@ public class DaoTripTest {
 	private IClientDao clientDao;
 	private static Logger log = Logger.getLogger(DaoTripTest.class);
 
-	@Before
-	public void init() {
-
-	}
-
-	@After
-	public void destroy() {
-
-	}
 
 	@Test
 	public void testGetTripDao() {
@@ -65,35 +56,7 @@ public class DaoTripTest {
 		}
 	}
 
-	// @Test
-	// public void testCreateTripDao() {
-	// Trip trip = null;
-	// Session session = HibernateUtil.getHibernateUtil().getSession();
-	// Transaction transaction = null;
-	// try {
-	// //transaction = session.beginTransaction();
-	// int i=tripDao.getAll().size();
-	// Order order1 = orderDao.get(2);
-	// PropertiesOrder propertiesOrder=order1.getPropertiesOrder();
-	// propertiesOrder.setDictanse(275);
-	// Order order2 = new Order(order1.getClient(),propertiesOrder);
-	// trip = new Trip(propertiesOrder.getTarget(), 275, 2, 100,
-	// order2.getPropertiesOrder().getDateBegin(),
-	// order2.getPropertiesOrder().getDateFinish(), 0,
-	// MySqlCarDao.getInstance().get(11), order2);
-	//
-	// order2.setTrip(trip);
-	// orderDao.create(order2);
-	// //tripDao.create(trip);
-	// int j=tripDao.getAll().size();
-	// //transaction.commit();
-	// Assert.assertEquals(true, j == i+1);
-	// } catch (DaoException e) {
-	// //transaction.rollback();
-	// Assert.assertEquals(true, 5 == 4);
-	// log.error("Error test CreateTripDao " + e);
-	// }
-	// }
+	
 
 	@Test
 	public void testSortTripClient() {

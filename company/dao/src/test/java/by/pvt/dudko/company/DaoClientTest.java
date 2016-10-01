@@ -37,15 +37,6 @@ public class DaoClientTest {
 	private static Logger log = Logger.getLogger(DaoClientTest.class);
 	
 
-	@Before
-	public void init() {
-		
-	}
-
-	@After
-	public void destroy() {
-	
-	}
 
 	@Test
 	public void testGetClientDao() {
@@ -80,10 +71,8 @@ public class DaoClientTest {
 
 	@Test
 	public void testUpdateClientDao() {
-		Client client = null;
-
 		try {
-			client = clientDao.get(2);
+			Client client = clientDao.get(2);
 			client.setLogin("lex");
 			log.info("test update client begin");
 			clientDao.update(client);
@@ -111,9 +100,9 @@ public class DaoClientTest {
 
 	@Test
 	public void testGetAllClientDao() {
-		List<Client> clients = null;
+
 		try {
-			clients = clientDao.getAll();
+			List<Client> clients = clientDao.getAll();
 			log.info("test get all client begin");
 			Assert.assertEquals(true, clients != null);
 
@@ -125,13 +114,12 @@ public class DaoClientTest {
 
 	@Test
 	public void testGetInitClientDao() {
-		Client clients = null;
 		String login = "root";
 		String pass = "222222";
 		try {
-			clients = clientDao.getClientByLoginName(login, pass);
+			Client client = clientDao.getClientByLoginName(login, pass);
 			log.info("test get init client begin");
-			Assert.assertEquals(true, clients.getIdClient() == 3);
+			Assert.assertEquals(true, client.getIdClient() == 3);
 		} catch (Exception e) {
 			
 			Assert.assertEquals(true, 5 == 4);

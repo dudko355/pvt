@@ -53,7 +53,6 @@ import by.pvt.dudko.company.web.constant.ConstantsPages;
 @RequestMapping("/client")
 public class ClientController {
 	private final int DATE_CORRECT=0;
-	private final int DATE_INCORRECT=1;
 	private final int CAR_NOT_FOUND=2;
 	private static final Logger log = Logger.getLogger(ClientController.class);
 	@Autowired
@@ -118,7 +117,6 @@ public class ClientController {
 	}
 	@RequestMapping(value = "/successfully", method = RequestMethod.GET)
 	public String orderSuccessfully(Model model){
-	
 		return ConstantsPages.CLIENT_ORDER;
 		
 	}
@@ -131,7 +129,7 @@ public class ClientController {
 		int i = tripServiceImpl.existTripClient(list);
 		if (i == 0) {
 			clientServiceImpl.deleteUser(client);
-			request.getSession().invalidate();
+			request.getSession().removeAttribute("USER");
 			return "redirect:/start_page";
 		} else {
 			model.addAttribute("ERROR", "warning");
@@ -156,19 +154,17 @@ public class ClientController {
 	
 	@RequestMapping(value = "/redirect/orders", method = RequestMethod.GET)
 	public String myOrdersRedirect(HttpServletRequest request){
-		String page = null;
 		Client client = (Client) request.getSession().getAttribute("USER");
 		SortTripDto sortTripDto = (SortTripDto) request.getSession().getAttribute("source");
 		FilterTripClientDto filtrTripClientDto = (FilterTripClientDto) request.getSession().getAttribute("filtr");
 		PaginationDto paginationDto = (PaginationDto) request.getSession().getAttribute("pagination");
 		List<Trip> tripsDefine = tripServiceImpl.pagination(client, sortTripDto, filtrTripClientDto, paginationDto);
 		request.setAttribute("trips", tripsDefine);
-		return page = ConstantsPages.ORDERS;
+		return ConstantsPages.ORDERS;
 		
 	}
 	@RequestMapping(value = "/orders", method = RequestMethod.GET)
 	public String myOrders(Model model, HttpServletRequest request){
-		String page = null;
 		Client client = (Client) request.getSession().getAttribute("USER");
 		List<Trip> trips = clientServiceImpl.tripsClient(client);
 		PaginationDto paginationDto = new PaginationDto(trips.size(), 1, trips.size(), 1, 0);
@@ -177,14 +173,13 @@ public class ClientController {
 		request.setAttribute("trips", trips);
 		request.getSession().setAttribute("filtr", new FilterTripClientDto());
 		request.getSession().setAttribute("source",sortTripDto );
-		page = ConstantsPages.ORDERS;
-		return page;
+		return ConstantsPages.ORDERS;
 	}
 	
 	@ExceptionHandler(Exception.class)
 	public ModelAndView allException(Exception e) {
 		log.error("error", e);
-		ModelAndView model = new ModelAndView("error_two");
+		ModelAndView model = new ModelAndView("exception_handler");
 		model.addObject("ERROR", "errorText");
 		return model;
 
@@ -193,9 +188,9 @@ public class ClientController {
 	@ExceptionHandler(DataAccessException.class)
 	public ModelAndView serviceException(Exception e) {
 		log.error("error", e);
-		ModelAndView model = new ModelAndView("error_two");
+		ModelAndView model = new ModelAndView("exception_handler");
 		model.addObject("ERROR", "dataBaseError");
-		
 		return model;
 	}
+	
 }

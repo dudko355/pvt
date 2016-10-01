@@ -49,15 +49,7 @@ public class TripTest {
 	private IOrderService orderServiceImpl;
 	private static Logger log = Logger.getLogger(TripTest.class);
 	
-	@Before
-	public void init() {
 
-	}
-
-	@After
-	public void destroy() {
-	
-      }
 	
 	@Test
 	public void testGetAllTrip() {

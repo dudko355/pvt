@@ -39,15 +39,6 @@ public class DaoCarTest {
 	private static Logger log = Logger.getLogger(DaoCarTest.class);
 	
 
-	@Before
-	public void init() {
-		
-	}
-
-	@After
-	public void destroy() {
-		
-	}
 
 	@Test
 	public void testGetCar() {
@@ -63,29 +54,13 @@ public class DaoCarTest {
 		}
 	}
 
-//	@Test
-//	public void testCreateCarDao() {
-//		try {
-//			int i = carDao.getAll().size();
-//			Car car = new Car("volvo", 2, 20, 20, 0);
-//			Set<Driver> driver = new HashSet<Driver>();
-//			driver.add((Driver) driverDao.get(3));
-//			car.setDriver(driver);
-//			log.info("test create car begin");
-//			carDao.create(car);
-//			int j = carDao.getAll().size();
-//			Assert.assertEquals(true, j == i + 1);
-//		} catch (Exception e) {
-//			Assert.assertEquals(true, 5 == 4);
-//			log.error("Error test create car " + e);
-//		}
-//	}
+
 
 	@Test
 	public void testUpdateCarDao() {
-		Car car = null;
+
 		try {
-			car = (Car) carDao.get(2);
+			Car car = (Car) carDao.get(2);
 			car.setMass(70);
 			log.info("test update car begin");
 			carDao.update(car);
@@ -112,9 +87,8 @@ public class DaoCarTest {
 
 	@Test
 	public void testGetAllCarDao() {
-		List<Car> cars = null;
 		try {
-			cars = carDao.getAll();
+			List<Car> cars = carDao.getAll();
 			log.info("test get all car begin");
 			Assert.assertEquals(true, cars != null);
 		} catch (Exception e) {

@@ -26,22 +26,13 @@ import by.pvt.dudko.company.entities.Role;
 @RunWith(SpringJUnit4ClassRunner.class)
 @TransactionConfiguration(transactionManager = "txManager")
 @Transactional(propagation = Propagation.REQUIRED)
-public class DaoRolTest {
+public class DaoRoleTest {
 	@Autowired
 	@Qualifier("roleDao")
 	private IDao<Role> rolDao;
-	private static Logger log = Logger.getLogger(DaoRolTest.class);
+	private static Logger log = Logger.getLogger(DaoRoleTest.class);
 	
-	
-	@Before
-	public void init() {
-		
-	}
 
-	@After
-	public void destroy() {
-	
-	}
 
 	@Test
 	public void testGetRolDao() {

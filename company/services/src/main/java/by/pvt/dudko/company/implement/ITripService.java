@@ -50,7 +50,7 @@ public interface ITripService {
 	 * @return collection trip
 	 * 
 	 */
-	public List<Trip> filtrTrip(Client client, FilterTripClientDto filtrTripClientDto, SortTripDto sortTripDto) ;
+	public List<Trip> filterTrip(Client client, FilterTripClientDto filtrTripClientDto, SortTripDto sortTripDto) ;
 	
 	/**
 	 * method change condition trip

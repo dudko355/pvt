@@ -37,15 +37,7 @@ public class DaoOrderTest {
 	private static Logger log = Logger.getLogger(DaoOrderTest.class);
 	
 	
-	@Before
-	public void init() {
-	
-	}
 
-	@After
-	public void destroy() {
-	
-	}
 
 	@Test
 	public void testGetOrderDao() {

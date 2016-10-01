@@ -32,7 +32,7 @@ public class ClientDao extends BaseDao<Client> implements IClientDao {
 
 	@SuppressWarnings({ "finally", "unchecked" })
 	
-	public Client getClientByLoginName(String login, String pass) throws Exception{
+	public Client getClientByLoginName(String login, String pass){
 		log.info("(attempt) get Client by login and password");
 		Client client = null;
 		try {

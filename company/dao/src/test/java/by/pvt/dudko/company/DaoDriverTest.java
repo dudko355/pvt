@@ -44,15 +44,7 @@ public class DaoDriverTest {
 	private static Logger log = Logger.getLogger(DaoDriverTest.class);
 	
 
-	@Before
-	public void init() {
-	
-	}
 
-	@After
-	public void destroy() {
-		
-	}
 	@Test
 	public void testGetDriverDao() {
 

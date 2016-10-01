@@ -9,6 +9,7 @@ import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Trip;
 
 public interface ITripDao extends IDao<Trip>{
+	
 	/**
 	 * 
 	 * @param object Client
@@ -16,6 +17,7 @@ public interface ITripDao extends IDao<Trip>{
 	 * @throws DataAccessException(Spring)
 	 */
 	public List<Trip> getTripsClient(Client client);
+	
 	/**
 	 * 
 	 * @param object SortTripDto ,object FiltrTripDto,object client,max count element on the page
@@ -23,6 +25,7 @@ public interface ITripDao extends IDao<Trip>{
 	 * @throws DataAccessException(Spring)
 	 */
 	public List<Trip> sortTripClient(SortTripDto sortOrder, FilterTripClientDto filtrOrder, Client client,int max);
+	
 	/**
 	 * 
 	 * @param object Client ,object SortTripDto,object FiltrTripClientDto,object PaginationDto
@@ -30,6 +33,7 @@ public interface ITripDao extends IDao<Trip>{
 	 * @throws DataAccessException(Spring)
 	 */
 	public List<Trip> paginationDao(Client client, SortTripDto sortTrip, FilterTripClientDto filtrOrder, PaginationDto pagination);
+	
 	/**
 	 * 
 	 * @param object Client ,filtrTrip,sortTripDto

@@ -31,7 +31,6 @@ public interface IAdminService {
 	 * @return object car
 	 * @param object
 	 *            order
-	 * @throws IllegalArgumentException
 	 * @throws ServiceException
 	 */
 	public Car selectCar(Order order) throws ServiceException;

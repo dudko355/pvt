@@ -7,6 +7,7 @@ package by.pvt.dudko.company.dto;
 public class SortTripDto {
 	private String orderColumn;
 	private String column ;
+	//the first position(with a starting element)
 	private final int start = 1;
 
 	public SortTripDto() {

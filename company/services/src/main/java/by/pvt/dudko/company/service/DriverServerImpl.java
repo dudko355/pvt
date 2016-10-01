@@ -32,7 +32,7 @@ public class DriverServerImpl implements IDriverService{
 
 
 	public List<Driver> allDriver() {
-		List<Driver> list = driverDao.getAll();
-		return list;
+		return driverDao.getAll();
 	}
+	
 }

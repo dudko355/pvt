@@ -17,6 +17,7 @@ public class FilterTripClientDto {
 	private Date dateStart=CompanyDateUtil.date("01/01/1990");
 	private Date dateFinish=CompanyDateUtil.date("01/01/2020");
 	private String tripTarget="";
+	//the first position(with a starting element)
 	private final int start=1;
 	
 	public Date getDateStart() {

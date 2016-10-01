@@ -34,16 +34,6 @@ public class CarTest {
 	private ICarService carServiceImpl;
 	private static Logger log = Logger.getLogger(CarTest.class);
 	
-	@Before
-	public void init() {
-	
-	}
-
-	@After
-	public void destroy() {
-
-      
-	}
 	
 	@Test
 	public void testGetAllCar() {
