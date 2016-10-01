@@ -3,6 +3,7 @@ package by.pvt.dudko.company.web.controller;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,27 +29,43 @@ import by.pvt.dudko.company.dto.PaginationDto;
 import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
+import by.pvt.dudko.company.entities.Driver;
 import by.pvt.dudko.company.entities.Trip;
+import by.pvt.dudko.company.exception.DateException;
 import by.pvt.dudko.company.exception.ServiceException;
+import by.pvt.dudko.company.implement.ICarService;
+import by.pvt.dudko.company.implement.IClientService;
+import by.pvt.dudko.company.implement.IOrderService;
+import by.pvt.dudko.company.implement.IServiceService;
+import by.pvt.dudko.company.implement.ITripService;
 import by.pvt.dudko.company.service.CarServiceImpl;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
 import by.pvt.dudko.company.service.TripServiceImpl;
-import by.pvt.dudko.company.util.UtilDate;
+import by.pvt.dudko.company.util.CompanyDateUtil;
 import by.pvt.dudko.company.web.constant.ConstantsPages;
-
+/**
+ * ClientController class 
+ * @author Aliaksei Dudko
+ *
+ */
 @Controller
 @RequestMapping("/client")
 public class ClientController {
+	private final int DATE_CORRECT=0;
+	private final int DATE_INCORRECT=1;
+	private final int CAR_NOT_FOUND=2;
 	private static final Logger log = Logger.getLogger(ClientController.class);
 	@Autowired
-	private ClientServiceImpl clientServiceImpl;
+	private IClientService clientServiceImpl;
 	@Autowired
-	private TripServiceImpl tripServiceImpl;
+	private IServiceService serviceImpl;
 	@Autowired
-	private OrderServiceImpl orderServiceImpl;
+	private ITripService tripServiceImpl;
 	@Autowired
-	private CarServiceImpl carServiceImpl;
+	private IOrderService orderServiceImpl;
+	@Autowired
+	private ICarService carServiceImpl;
 
 	@RequestMapping(value = "/return", method = RequestMethod.GET)
 	public String pageClient() {
@@ -67,18 +84,28 @@ public class ClientController {
 	}
 
 	@RequestMapping(value = "/confirm", method = RequestMethod.POST)
-	public String fixationTrip(Model model,@Valid @ModelAttribute("orderDto") OrderDto orderDto,BindingResult bindingResult, HttpServletRequest request) {
+	public String fixationTrip(Model model,@Valid @ModelAttribute("orderDto") OrderDto orderDto,BindingResult bindingResult, HttpServletRequest request){
 		 if(bindingResult.hasErrors()) {
 			    model.addAttribute("ERROR", "incorrect");
 				model.addAttribute("URL", "client/order");
 				return ConstantsPages.ERROR;
 		 }
-		
 		Client client = (Client) request.getSession().getAttribute("USER");
-		int i = orderServiceImpl.estimateDateOrder(orderDto, client);
-		if (i == 0) {
-			return "redirect:/client/return";
-		} else if (i == 2) {
+		Car car=null;
+		int result = orderServiceImpl.estimateDateOrder(orderDto, client);
+		if (result == DATE_CORRECT) {
+			try {
+				car=serviceImpl.transactionSaveTrip(client, orderDto);
+			} catch (ServiceException e) {
+				model.addAttribute("ERROR", "errorTextNotFoundCar");
+				model.addAttribute("URL", "client/order");
+				return ConstantsPages.ERROR;
+			}
+			Set<Driver> drivers=car.getDriver();
+			request.getSession().setAttribute("car", car);
+			request.getSession().setAttribute("driver", drivers);
+			return "redirect:/client/successfully";
+		} else if (result == CAR_NOT_FOUND) {
 			model.addAttribute("ERROR", "errorTextNotFoundCar");
 			model.addAttribute("URL", "client/order");
 			return ConstantsPages.ERROR;
@@ -89,7 +116,14 @@ public class ClientController {
 		}
 	
 	}
-
+	@RequestMapping(value = "/successfully", method = RequestMethod.GET)
+	public String orderSuccessfully(Model model){
+	
+		return ConstantsPages.CLIENT_ORDER;
+		
+	}
+	
+	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String clientDelete(Model model, HttpServletRequest request) {
 		Client client = (Client) request.getSession().getAttribute("USER");
@@ -108,7 +142,7 @@ public class ClientController {
 
 	@RequestMapping(value = "/exit", method = RequestMethod.GET)
 	public String clientExit(HttpServletRequest request) {
-		request.getSession().invalidate();
+		request.getSession().removeAttribute("USER");
 		return ConstantsPages.PAGES_BASE;
 	}
 

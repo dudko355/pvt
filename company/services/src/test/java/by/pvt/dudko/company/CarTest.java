@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Trip;
+import by.pvt.dudko.company.implement.ICarService;
 import by.pvt.dudko.company.service.CarServiceImpl;
 
 @ContextConfiguration("/testContextServices.xml")
@@ -30,7 +31,7 @@ import by.pvt.dudko.company.service.CarServiceImpl;
 public class CarTest {
 	
 	@Autowired 
-	private CarServiceImpl carServiceImpl;
+	private ICarService carServiceImpl;
 	private static Logger log = Logger.getLogger(CarTest.class);
 	
 	@Before
@@ -49,7 +50,7 @@ public class CarTest {
 
 		try {
 			log.info("test get all car in service begin");
-			List<Car> allCar=carServiceImpl.allCar();
+			List<Car> allCar=carServiceImpl.getAllCar();
 			Assert.assertEquals(true, allCar.size() !=0);
 			
 		} catch (Throwable e) {
@@ -62,7 +63,7 @@ public class CarTest {
 
 		try {
 			log.info("test conditionCar in service begin");
-			Integer condition=carServiceImpl.conditionCar(1);
+			Integer condition=carServiceImpl.getCarConditionById(1);
 			Assert.assertEquals(true, condition != null);
 		} catch (Throwable e) {
 			Assert.assertEquals(true, 5==4);
@@ -87,7 +88,7 @@ public class CarTest {
 		try {
 			log.info("test condCar in service begin");
 			Car car=carServiceImpl.getCar(1);
-			int cond=carServiceImpl.condCar(car);
+			int cond=carServiceImpl.getCarConditionByCar(car);
 			Assert.assertEquals(true, (cond == 0)||(cond == -1)||(cond == 1));
 			
 		} catch (Throwable e) {
@@ -102,8 +103,8 @@ public class CarTest {
 		try {
 			log.info("test condCar in service begin");
 			Car car=carServiceImpl.getCar(10);
-			carServiceImpl.changeConditionCar(car, -1);
-			Assert.assertEquals(true, carServiceImpl.conditionCar(10) == -1);
+			carServiceImpl.changeCarCondition(car, -1);
+			Assert.assertEquals(true, carServiceImpl.getCarConditionById(10) == -1);
 		} catch (Throwable e) {
 			Assert.assertEquals(true, 5==4);
 			log.error("Error test condCar in service" + e);

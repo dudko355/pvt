@@ -18,33 +18,35 @@ import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Trip;
-
+import by.pvt.dudko.company.implement.ICarService;
+import by.pvt.dudko.company.implement.ITripService;
+/**
+ * TripServiceImpl class 
+ * business logic 
+ * @author Aliaksei Dudko
+ *
+ */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class TripServiceImpl {
+public class TripServiceImpl  implements ITripService {
 
 	@Autowired
-	private IOrderDao mySqlOrderDao;
+	private IOrderDao orderDao;
 	@Autowired
-	private ITripDao mySqlTripDao;
+	private ITripDao tripDao;
 	@Autowired
-	@Qualifier("mySqlCarDao")
-	private IDao mySqlCarDao;
+	@Qualifier("carDao")
+	private IDao carDao;
 	@Autowired
-	private CarServiceImpl carServiceImpl;
+	private ICarService carServiceImpl;
 	private static final Logger log = Logger.getLogger(TripServiceImpl.class);
 
-	public TripServiceImpl() {
+	public TripServiceImpl(){
 	}
 
-	/**
-	 * all trips
-	 * 
-	 * @return collection all trips
-	 * 
-	 */
+
 	public List<Trip> allTrip() {
-		List<Trip> list = mySqlTripDao.getAll();
+		List<Trip> list = tripDao.getAll();
 		return list;
 	}
 
@@ -97,96 +99,52 @@ public class TripServiceImpl {
 	public List<Trip> pagination(Client client, SortTripDto sortTripDto, FilterTripClientDto filtrTripClientDto,
 			PaginationDto paginationDto) {
 
-		List<Trip> list = mySqlTripDao.paginationDao(client, sortTripDto, filtrTripClientDto, paginationDto);
+		List<Trip> list = tripDao.paginationDao(client, sortTripDto, filtrTripClientDto, paginationDto);
 		return list;
 	}
 
-	/**
-	 * 
-	 * @param object
-	 *            SortTripDto ,object FiltrTripClientDto,object client
-	 * @return collection trip
-	 *
-	 */
+
 	public List<Trip> sortTrip(SortTripDto sortTrip, FilterTripClientDto filtrTripClientDto, Client client, int max) {
-		List<Trip> list = mySqlTripDao.sortTripClient(sortTrip, filtrTripClientDto, client, max);
+		List<Trip> list = tripDao.sortTripClient(sortTrip, filtrTripClientDto, client, max);
 		return list;
 	}
 
-	/**
-	 * 
-	 * @param object
-	 *            SortTripDto ,object FiltrTripClientDto,object client
-	 * @return collection trip
-	 * 
-	 */
+
 	public List<Trip> filtrTrip(Client client, FilterTripClientDto filtrTripClientDto, SortTripDto sortTripDto) {
-		List<Trip> tripsDefine = mySqlTripDao.getFiltrTrips(client, filtrTripClientDto, sortTripDto);
+		List<Trip> tripsDefine = tripDao.getFiltrTrips(client, filtrTripClientDto, sortTripDto);
 		return tripsDefine;
 	}
 
-	/**
-	 * method change condition trip
-	 * 
-	 * @param object
-	 *            trip,condition(-1,0,1)
-	 *
-	 */
+
 	public void changeCondTrip(Trip trip, int condition) {
 		trip.setConditionTrip(condition);
-		mySqlTripDao.update(trip);
+		tripDao.update(trip);
 
 	}
 
-	/**
-	 * method fixation trip in database
-	 * 
-	 * @param object
-	 *            trip
-	 * 
-	 */
+
 	public void fixationTrip(Trip trip) {
 		Car car = carServiceImpl.getCar(trip.getCar().getIdCar());
-		mySqlTripDao.create(trip);
+		tripDao.create(trip);
 		car.setCondition(1);
-		mySqlCarDao.update(car);
+		carDao.update(car);
 	}
 
-	/**
-	 * method delete trip and order in database
-	 * 
-	 * @param object
-	 *            order
-	 * 
-	 */
+
 	public void deleteTrip(Trip trip) {
-		mySqlOrderDao.delete(trip.getIdOrder());
+		orderDao.delete(trip.getIdOrder());
 
 	}
 
-	/**
-	 * method define all trip one client
-	 * 
-	 * @return collection trips
-	 * @param object
-	 *            client
-	 * 
-	 */
+
 	public List<Trip> getTripUser(Client client) {
-		List<Trip> list = mySqlTripDao.getTripsClient(client);
+		List<Trip> list = tripDao.getTripsClient(client);
 		return list;
 	}
 
-	/**
-	 * method get one trip
-	 * 
-	 * @return object trip
-	 * @param id
-	 *            trip
-	 * 
-	 */
+
 	public Trip getTrip(int idTrip) {
-		Trip trip = (Trip) mySqlTripDao.get(idTrip);
+		Trip trip = (Trip) tripDao.get(idTrip);
 		return trip;
 	}
 

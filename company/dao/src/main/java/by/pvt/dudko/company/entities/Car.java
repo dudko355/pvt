@@ -16,6 +16,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Car class
+ * POJO Car 
+ * @author Aliaksei Dudko
+ *
+ */
+
 @Entity
 @Table(name="CAR")
 public class Car implements Serializable {
@@ -32,9 +39,9 @@ public class Car implements Serializable {
 	private int seatCount;
 	 @Column(name="mass")
 	private int mass;
-	 @Column(name="valume")
+	 @Column(name="volume")
 	private int volume;
-	 @Column(name="conditions")
+	 @Column(name="condition")
 	private int condition;
 	@ManyToMany(fetch = FetchType.EAGER,mappedBy="cars", cascade={
 			CascadeType.DETACH,
@@ -134,7 +141,7 @@ public class Car implements Serializable {
 		if (!(o instanceof Car))
 			return false;
 		Car car = (Car) o;
-		if (idCar != 0 ? idCar != car.idCar : car.idCar != 0)
+		if (idCar != car.idCar)
 			return false;
 		return true;
 	}

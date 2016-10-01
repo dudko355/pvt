@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.dao.IDao;
 import by.pvt.dudko.company.dao.IOrderDao;
-import by.pvt.dudko.company.dao.impl.MySqlOrderDao;
+import by.pvt.dudko.company.dao.impl.OrderDao;
 import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.PropertiesOrder;
 
@@ -67,7 +67,7 @@ public class DaoOrderTest {
 			int i=orderDao.getAll().size();
 			Order order1 = orderDao.get(2);
 			PropertiesOrder propertiesOrder=order1.getPropertiesOrder();
-			propertiesOrder.setDictanse(275);
+			propertiesOrder.setDistance(275);
 			order = new Order(order1.getClient(),propertiesOrder);
 			log.info("test create Order begin");
 			orderDao.create(order);

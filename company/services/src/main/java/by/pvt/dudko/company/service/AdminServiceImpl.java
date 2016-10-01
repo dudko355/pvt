@@ -14,37 +14,48 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.dao.IDao;
 import by.pvt.dudko.company.dao.IOrderDao;
-import by.pvt.dudko.company.dao.impl.MySqlOrderDao;
+import by.pvt.dudko.company.dao.impl.OrderDao;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.Trip;
 import by.pvt.dudko.company.exception.ServiceException;
+import by.pvt.dudko.company.implement.IAdminService;
+import by.pvt.dudko.company.implement.ICarService;
+
+/**
+ * AdminServiceImpl class business logic
+ * 
+ * @author Aliaksei Dudko
+ *
+ */
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class AdminServiceImpl {
+public class AdminServiceImpl implements IAdminService {
+	private final int busyCar = 1;
+	private final int freeCar = 0;
+	private final int brokenCar = -1;
 	@Autowired
-	private CarServiceImpl carServise;
+	private ICarService carServise;
 	@Autowired
-	private IOrderDao mySqlOrderDao;
+	private IOrderDao orderDao;
 	private static final Logger log = Logger.getLogger(AdminServiceImpl.class);
 
 	public AdminServiceImpl() {
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
-	public List<Car> busyCar() {
+	public List<Car> getBusyCar() {
 		Date date = new Date();
-		List<Car> cars = carServise.allCar();
+		List<Car> cars = carServise.getAllCar();
 		List<Car> list = new ArrayList();
 		for (Car car : cars) {
 			car.getDriver();
-			if (car.getCondition() == 1) {
+			if (car.getCondition() == busyCar) {
 				list.add(car);
 			} else {
 				for (Trip trip : car.getTrips()) {
-					if (date.after(trip.getDateBegin()) && date.before(trip.getDateFinish())) {
+					if (date.after(trip.getDateStart()) && date.before(trip.getDateFinish())) {
 						list.add(car);
 						break;
 					}
@@ -56,34 +67,24 @@ public class AdminServiceImpl {
 		return list;
 	}
 
-	/**
-	 * method choose car for order
-	 * 
-	 * @return object car
-	 * @param object
-	 *            order
-	 * @throws IllegalArgumentException
-	 * @throws ServiceException
-	 */
 	public Car selectCar(Order order) throws ServiceException {
 		List<Car> list = new ArrayList<Car>();
-		Car car = new Car();
-		List<Car> cars = carServise.allCar();
+		Car car = null;
+		List<Car> cars = carServise.getAllCar();
 		for (Car car1 : cars) {
-			if (car1.getCondition() == 0) {
+			if (car1.getCondition() == freeCar) {
 				if (order.getPropertiesOrder().getMass() <= car1.getMass()
 						&& order.getPropertiesOrder().getSeatCount() <= car1.getSeatCount()
 						&& order.getPropertiesOrder().getVolume() <= car1.getVolume()) {
 					Set<Trip> trips = (Set<Trip>) car1.getTrips();
-					if (carServise.equalsDateOrderCarTrips(trips, order)) {
-						list.add(car1);
+					if (carServise.checkListTripsOnCoincidenceDatesWithOrder(trips, order)) {
+						car = car1;
+						break;
 					}
 				}
 			}
 		}
-		if (!list.isEmpty()) {
-			car = list.get(0);
-		} else {
+		if (car == null) {
 			String message = "Car is not found";
 			log.info(message);
 			throw new ServiceException(message);
@@ -92,45 +93,30 @@ public class AdminServiceImpl {
 		return car;
 	}
 
-	/**
-	 * method generates an trip
-	 * 
-	 * @return object trip
-	 * @param objects
-	 *            order,car,client
-	 * 
-	 */
 	public Trip formTrip(Order order, Car car, Client client) {
+		int tripNotStart=-1;
 		Trip trip = new Trip();
-		trip.setTarget(order.getPropertiesOrder().getTarget());
-		trip.setDateBegin(order.getPropertiesOrder().getDateBegin());
+		trip.setTripTarget(order.getPropertiesOrder().getOrderTarget());
+		trip.setDateStart(order.getPropertiesOrder().getDateStart());
 		trip.setDateFinish(order.getPropertiesOrder().getDateFinish());
-		trip.setDictanse(order.getPropertiesOrder().getDictanse());
+		trip.setDistance(order.getPropertiesOrder().getDistance());
 		trip.setCar(car);
 		trip.setOrder(order);
 		trip.setIdClient(client.getIdClient());
-		trip.setIdTrip(mySqlOrderDao.getMaxIdOrder() + 1);
-		trip.setConditionTrip(-1);
+		trip.setIdTrip(orderDao.getMaxIdOrder() + 1);
+		trip.setConditionTrip(tripNotStart);
 		String message = "new trip is fill";
 		log.info(message);
-
 		return trip;
 	}
 
-	/**
-	 * method define broken car
-	 * 
-	 * @return collection car
-	 * 
-	 */
-	public List<Car> brokenCars() {
+	public List<Car> getBrokenCars() {
 		List<Car> list = new ArrayList<Car>();
-		for (Car car : carServise.allCar()) {
-			if (carServise.condCar(car) == (-1)) {
+		for (Car car : carServise.getAllCar()) {
+			if (carServise.getCarConditionByCar(car) == brokenCar) {
 				list.add(car);
 			}
 		}
-
 		return list;
 
 	}

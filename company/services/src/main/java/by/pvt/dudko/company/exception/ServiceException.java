@@ -1,6 +1,10 @@
 package by.pvt.dudko.company.exception;
 
-
+/**
+ * ServiceException class
+ * @author Aliaksei Dudko
+ *
+ */
 public class ServiceException extends Exception {
 
     private String exception;

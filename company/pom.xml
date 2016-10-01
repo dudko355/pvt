@@ -252,7 +252,7 @@
 		<aspect.version>1.8.4</aspect.version>
 		<dbcp.version>1.4</dbcp.version>
 		<cglib.version>3.1</cglib.version>
-		<spring.security>4.0.3.RELEASE</spring.security>
+		<spring.security>3.2.5.RELEASE</spring.security>
 
 	</properties>
 

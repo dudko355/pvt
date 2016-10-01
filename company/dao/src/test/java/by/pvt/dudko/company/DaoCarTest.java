@@ -31,10 +31,10 @@ import by.pvt.dudko.company.entities.Driver;
 @Transactional(propagation = Propagation.REQUIRED)
 public class DaoCarTest {
 	@Autowired
-	@Qualifier("mySqlCarDao")
+	@Qualifier("carDao")
 	private IDao<Car> carDao;
 	@Autowired
-	@Qualifier("mySqlDriverDao")
+	@Qualifier("driverDao")
 	private IDao<Driver> driverDao;
 	private static Logger log = Logger.getLogger(DaoCarTest.class);
 	
@@ -63,23 +63,23 @@ public class DaoCarTest {
 		}
 	}
 
-	@Test
-	public void testCreateCarDao() {
-		try {
-			int i = carDao.getAll().size();
-			Car car = new Car("volvo", 2, 20, 20, 0);
-			Set<Driver> driver = new HashSet<Driver>();
-			driver.add((Driver) driverDao.get(3));
-			car.setDriver(driver);
-			log.info("test create car begin");
-			carDao.create(car);
-			int j = carDao.getAll().size();
-			Assert.assertEquals(true, j == i + 1);
-		} catch (Exception e) {
-			Assert.assertEquals(true, 5 == 4);
-			log.error("Error test create car " + e);
-		}
-	}
+//	@Test
+//	public void testCreateCarDao() {
+//		try {
+//			int i = carDao.getAll().size();
+//			Car car = new Car("volvo", 2, 20, 20, 0);
+//			Set<Driver> driver = new HashSet<Driver>();
+//			driver.add((Driver) driverDao.get(3));
+//			car.setDriver(driver);
+//			log.info("test create car begin");
+//			carDao.create(car);
+//			int j = carDao.getAll().size();
+//			Assert.assertEquals(true, j == i + 1);
+//		} catch (Exception e) {
+//			Assert.assertEquals(true, 5 == 4);
+//			log.error("Error test create car " + e);
+//		}
+//	}
 
 	@Test
 	public void testUpdateCarDao() {

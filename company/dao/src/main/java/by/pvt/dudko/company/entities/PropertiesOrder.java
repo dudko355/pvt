@@ -5,14 +5,18 @@ import java.util.Date;
 import javax.persistence.Embeddable;
 
 import org.hibernate.annotations.Parent;
-
+/**
+ * Component for POJO Order 
+ * @author Aliaksei Dudko
+ *
+ */
 
 @Embeddable
 public class PropertiesOrder implements Serializable {
 	private static final long serialVersionUID = 10L;
-	private String target;
-	private int dictanse;
-	private Date dateBegin;
+	private String orderTarget;
+	private int distance;
+	private Date dateStart;
 	private Date dateFinish;
 	private int seatCount;
 	private int mass;
@@ -36,16 +40,16 @@ public class PropertiesOrder implements Serializable {
 		return volume;
 	}
 
-	public String getTarget() {
-		return target;
+	public String getOrderTarget() {
+		return orderTarget;
 	}
 
-	public int getDictanse() {
-		return dictanse;
+	public int getDistance() {
+		return distance;
 	}
 
-	public Date getDateBegin() {
-		return dateBegin;
+	public Date getDateStart() {
+		return dateStart;
 	}
 
 	public Date getDateFinish() {
@@ -55,19 +59,19 @@ public class PropertiesOrder implements Serializable {
 		return order;
 	}
 	
-	public void setTarget(String target) {
-		this.target = target;
+	public void setOrderTarget(String orderTarget) {
+		this.orderTarget = orderTarget;
 	}
 	public void setOrder(Order order) {
 		this.order = order;
 	}
 
-	public void setDictanse(int dictanse) {
-		this.dictanse = dictanse;
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 
-	public void setDateBegin(Date dateBegin) {
-		 this.dateBegin= dateBegin;
+	public void setDateStart(Date dateStart) {
+		 this.dateStart= dateStart;
 		 
 	}
 

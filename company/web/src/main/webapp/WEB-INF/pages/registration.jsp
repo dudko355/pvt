@@ -62,11 +62,13 @@ body {
 				<label for="password"><fmt:message key="password" /> :</label>
 				<s:input id="password" type="password" size="20" maxlength="20" path="password"/>
 				<br> <br> 
-				<input type="submit" value="<fmt:message key="login" />"> 
+				<input type="submit" value="<fmt:message key="register" />"> 
 				</fieldset>
 				<input type="hidden" name="page" value="enter" />
 			</s:form>
-			<p id="txt"></p>
+				<a href="${pageContext.servletContext.contextPath}/start_page"><button>
+					<fmt:message key="back" />
+				</button></a>
 		</div>
 	</section>
 	<footer>

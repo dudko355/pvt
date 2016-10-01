@@ -13,58 +13,52 @@ import org.springframework.transaction.annotation.Propagation;
 import by.pvt.dudko.company.dao.IClientDao;
 import by.pvt.dudko.company.dao.IDao;
 import by.pvt.dudko.company.dao.ITripDao;
-import by.pvt.dudko.company.dao.impl.MySqlClientDao;
-import by.pvt.dudko.company.dao.impl.MySqlRolDao;
-import by.pvt.dudko.company.dao.impl.MySqlTripDao;
+import by.pvt.dudko.company.dao.impl.ClientDao;
+import by.pvt.dudko.company.dao.impl.RoleDao;
+import by.pvt.dudko.company.dao.impl.TripDao;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Role;
 import by.pvt.dudko.company.entities.Trip;
 import by.pvt.dudko.company.exception.ServiceException;
-
+import by.pvt.dudko.company.implement.IClientService;
+/**
+ * ClientServiceImpl class 
+ * business logic 
+ * @author Aliaksei Dudko
+ *
+ */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class ClientServiceImpl {
+public class ClientServiceImpl implements IClientService{
 	private static final int CLIENT_ROLE_ID = 2;
 	@Autowired
-	private IClientDao mySqlClientDao;
+	private IClientDao clientDao;
 	@Autowired
-	private ITripDao mySqlTripDao;
+	private ITripDao tripDao;
 	@Autowired
-	@Qualifier("mySqlRolDao")
-	private IDao mySqlRolDao;
+	@Qualifier("roleDao")
+	private IDao roleDao;
 
 	private static final Logger log = Logger.getLogger(ClientServiceImpl.class);
 
 	public ClientServiceImpl() {
 	}
 
-	/**
-	 * all client
-	 * 
-	 * @return collection all driver
-	 * 
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Client> allClient() {
-		List<Client> list = mySqlClientDao.getAll();
+		List<Client> list = clientDao.getAll();
 		return list;
 	}
 
-	/**
-	 * method define client
-	 * 
-	 * @param login
-	 *            and password
-	 * @return client if he exist,else null
-	 * 
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	@SuppressWarnings("finally")
 	public Client getUser(String login, String password) {
 		Client client = null;
 		try {
-			client = mySqlClientDao.getClientByLoginName(login.trim(), password.trim());
+			client = clientDao.getClientByLoginName(login.trim(), password.trim());
 		} catch (Exception e) {
 			log.error("Error in method servise allClient", e);
 		} finally {
@@ -72,56 +66,31 @@ public class ClientServiceImpl {
 		}
 	}
 
-	/**
-	 * method writing new client in database
-	 * 
-	 * @param login
-	 *            and password
-	 * @return this client
-	 * 
-	 */
+
 	public Client registration(String password, String login) {
-		Role rol = (Role) mySqlRolDao.get(CLIENT_ROLE_ID);
+		Role rol = (Role) roleDao.get(CLIENT_ROLE_ID);
 		Client client = new Client(rol, login, password);
-		mySqlClientDao.create(client);
+		clientDao.create(client);
 		return client;
 	}
 
-	/**
-	 * method define all trips one client
-	 * 
-	 * @param object
-	 *            client
-	 * @return collection trips
-	 *
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Trip> tripsClient(Client client) {
-		List<Trip> list = mySqlTripDao.getTripsClient(client);
+		List<Trip> list = tripDao.getTripsClient(client);
 		return list;
 	}
 
-	/**
-	 * method delete user(client)
-	 * 
-	 * @param object
-	 *            client
-	 * 
-	 */
+
 	public void deleteUser(Client client) {
-		mySqlClientDao.delete(client.getIdClient());
+		clientDao.delete(client.getIdClient());
 		log.info("client is delete");
 	}
 
-	/**
-	 * @param key
-	 *            - id of Client
-	 * @return entity Client
-	 * 
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Client getClient(int key) {
-		Client client = (Client) mySqlClientDao.get(key);
+		Client client = (Client) clientDao.get(key);
 		return client;
 
 	}

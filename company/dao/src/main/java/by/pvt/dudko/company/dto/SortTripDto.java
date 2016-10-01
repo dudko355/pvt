@@ -1,5 +1,9 @@
 package by.pvt.dudko.company.dto;
-
+/**
+ * SortTripDto class 
+ * @author Aliaksei Dudko
+ *
+ */
 public class SortTripDto {
 	private String orderColumn;
 	private String column ;

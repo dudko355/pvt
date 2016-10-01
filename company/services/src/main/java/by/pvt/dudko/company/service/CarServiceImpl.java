@@ -13,120 +13,79 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.dao.IDao;
-import by.pvt.dudko.company.dao.impl.MySqlCarDao;
+import by.pvt.dudko.company.dao.impl.CarDao;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.Trip;
 import by.pvt.dudko.company.exception.ServiceException;
-
+import by.pvt.dudko.company.implement.ICarService;
+/**
+ * CarServiceImpl class 
+ * business logic 
+ * @author Aliaksei Dudko
+ *
+ */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class CarServiceImpl {
+public class CarServiceImpl implements ICarService {
 
 	@Autowired
-	@Qualifier("mySqlCarDao")
-	private IDao mySqlCarDao;
+	@Qualifier("carDao")
+	private IDao carDao;
 	private static final Logger log = Logger.getLogger(CarServiceImpl.class);
 
 	public CarServiceImpl() {
 	}
 
-	/**
-	 * All cars
-	 * 
-	 * @return collection all car
-	 *
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Car> allCar() {
-		List<Car> list = mySqlCarDao.getAll();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Car> getAllCar() {
+		List<Car> list = carDao.getAll();
 		return list;
 
 	}
 
-	/**
-	 * equals date which car do and date of order
-	 * 
-	 * @param object
-	 *            car and order
-	 * @return boolean(true if car free,else false)
-	 * 
-	 */
 
-	public boolean equalsDateOrderCarTrips(Set<Trip> list, Order order) {
-		boolean q = false;
+	public boolean checkListTripsOnCoincidenceDatesWithOrder(Set<Trip> list, Order order) {
+		boolean notCoincidence = false;
 		int amount = 0;
 		for (Trip trip : list) {
-			if (trip.getDateBegin().after(order.getPropertiesOrder().getDateFinish())
-					|| trip.getDateFinish().before(order.getPropertiesOrder().getDateBegin())) {
+			if (trip.getDateStart().after(order.getPropertiesOrder().getDateFinish())
+					|| trip.getDateFinish().before(order.getPropertiesOrder().getDateStart())) {
 				amount = amount + 1;
 			}
 		}
 		if (amount == list.size()) {
-			q = true;
+			notCoincidence = true;
 		}
-		
-		return q;
+		return notCoincidence;
 
 	}
 
-	/**
-	 * definition of key condition machines
-	 * 
-	 * @param key
-	 *            - id of Car
-	 * @return condition Car
-	 * 
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int conditionCar(int key) {
-		Car car = (Car) mySqlCarDao.get(key);
-		
+	public int getCarConditionById(int key) {
+		Car car = (Car) carDao.get(key);
 		return car.getCondition();
-
 	}
 
-	/**
-	 * definition of key machines
-	 * 
-	 * @param key
-	 *            - id of Car
-	 * @return entity Car
-	 * 
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Car getCar(int key) {
-		Car car = (Car) mySqlCarDao.get(key);
-		
+		Car car = (Car) carDao.get(key);
 		return car;
 
 	}
 
-	/**
-	 * definition of machines condition car
-	 * 
-	 * @param object
-	 *            Car
-	 * @return condition Car(-1,0,1)
-	 *
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int condCar(Car car) {
-		
-		return conditionCar(car.getIdCar());
+	public int getCarConditionByCar(Car car) {
+		return getCarConditionById(car.getIdCar());
 	}
 
-	/**
-	 * change condition car
-	 * 
-	 * @param object
-	 *            Car and condition,that should be
-	 * 
-	 */
 
-	public void changeConditionCar(Car car, int condition) {
+	public void changeCarCondition(Car car, int condition) {
 		car.setCondition(condition);
-		mySqlCarDao.update(car);
+		carDao.update(car);
 	}
 }

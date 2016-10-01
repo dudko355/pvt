@@ -42,9 +42,10 @@ button {
     cursor: pointer;
 }
 #carRepair, #tabl,#driver,#tablDriver,#tripTabl,#trip,#car,#cars {
-    padding: 5px;
+     padding: 5px;
     text-align: center;
-      
+    background-color: #e5eecc;
+    border: solid 1px #c3c3c3; 
  }
  #driver,#carRepair,#tripTabl,#cars {
     padding: 50px;
@@ -92,7 +93,8 @@ body {
 		 
 	</nav>
 	</div>
-	<div id="tabl"><fmt:message key="ccarRepain" /></div>
+	<h5><fmt:message key="clickInf" /></h5>
+	<div id="tabl" ><fmt:message key="ccarRepain" /></div>
 		<div id="carRepair">
 			<table>
 				<thead>
@@ -127,7 +129,7 @@ body {
 					<c:forEach var="trip" items="${ALLTRIP}">
 						<tr>
 							<td><c:out value="${trip.idTrip}" /></td>
-							<td><c:out value="${trip.target}" /></td>
+							<td><c:out value="${trip.tripTarget}" /></td>
 							<td><c:out value="${trip.car.idCar}" /></td>
 							<td><c:out value="${trip.idClient}" /></td>
 							<td><c:choose>

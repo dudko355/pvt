@@ -16,15 +16,20 @@ import org.springframework.web.servlet.ModelAndView;
 import by.pvt.dudko.company.dto.ClientDto;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.exception.ServiceException;
+import by.pvt.dudko.company.implement.IClientService;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.web.constant.ConstantsPages;
-
+/**
+ * EnterClientController class 
+ * @author Aliaksei Dudko
+ *
+ */
 @Controller
 @RequestMapping("/user")
 public class EnterClientController {
 	private static final Logger log = Logger.getLogger(EnterClientController.class);
 	@Autowired
-	private ClientServiceImpl clientServiceImpl;
+	private IClientService clientServiceImpl;
 
 	@RequestMapping(value = "/enter", method = RequestMethod.POST)
 	public String loginEnter(ClientDto clientDto, Model model, HttpServletRequest request) {

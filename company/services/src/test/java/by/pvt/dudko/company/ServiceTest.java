@@ -23,7 +23,12 @@ import by.pvt.dudko.company.dto.OrderDto;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Order;
+import by.pvt.dudko.company.exception.DateException;
 import by.pvt.dudko.company.exception.ServiceException;
+import by.pvt.dudko.company.implement.IClientService;
+import by.pvt.dudko.company.implement.IOrderService;
+import by.pvt.dudko.company.implement.IServiceService;
+import by.pvt.dudko.company.implement.ITripService;
 import by.pvt.dudko.company.service.AdminServiceImpl;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
@@ -36,13 +41,13 @@ import by.pvt.dudko.company.service.TripServiceImpl;
 @Transactional(propagation = Propagation.REQUIRED)
 public class ServiceTest {
 	@Autowired
-	private ClientServiceImpl clientServiceImpl;
+	private IClientService clientServiceImpl;
 	@Autowired
-	private OrderServiceImpl orderServiceImpl;
+	private IOrderService orderServiceImpl;
 	@Autowired
-	private TripServiceImpl tripServiceImpl;
+	private ITripService tripServiceImpl;
 	@Autowired
-	private ServiceImpl serviceImpl;
+	private IServiceService serviceImpl;
 	private static Logger log = Logger.getLogger(ServiceTest.class);
 
 	@Before
@@ -56,21 +61,21 @@ public class ServiceTest {
 	}
 
 	@Test(expected = ServiceException.class)
-	public void testTransactionSaveTripError() throws ParseException, ServiceException {
+	public void testTransactionSaveTripError() throws ServiceException{
 		int sizeTrip = tripServiceImpl.allTrip().size();
-		int sizeOrder = orderServiceImpl.allOrder().size();
+		int sizeOrder = orderServiceImpl.getAllOrder().size();
 		OrderDto orderDto = new OrderDto();
-		orderDto.setDateBegin("10/12/2016");
+		orderDto.setDateStart("10/12/2016");
 		orderDto.setDateFinish("10/15/2016");
-		orderDto.setDictanse(29);
+		orderDto.setDistance(29);
 		orderDto.setMass(200);
 		orderDto.setSeatCount(1);
-		orderDto.setTarget("vena");
+		orderDto.setOrderTarget("vena");
 		orderDto.setVolume(2);
 		Client client = clientServiceImpl.getUser("alex", "111111");
 		serviceImpl.transactionSaveTrip(client, orderDto);
 		Assert.assertEquals(true, tripServiceImpl.allTrip().size() == sizeTrip + 1);
-		Assert.assertEquals(true, orderServiceImpl.allOrder().size() == sizeOrder + 1);
+		Assert.assertEquals(true, orderServiceImpl.getAllOrder().size() == sizeOrder + 1);
 
 	}
 
@@ -79,19 +84,19 @@ public class ServiceTest {
 
 		try {
 			int sizeTrip = tripServiceImpl.allTrip().size();
-			int sizeOrder = orderServiceImpl.allOrder().size();
+			int sizeOrder = orderServiceImpl.getAllOrder().size();
 			OrderDto orderDto = new OrderDto();
-			orderDto.setDateBegin("10/12/2016");
+			orderDto.setDateStart("10/12/2016");
 			orderDto.setDateFinish("10/15/2016");
-			orderDto.setDictanse(29);
+			orderDto.setDistance(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);
-			orderDto.setTarget("vena");
+			orderDto.setOrderTarget("vena");
 			orderDto.setVolume(2);
 			Client client = clientServiceImpl.getUser("alex", "111111");
 			serviceImpl.transactionSaveTrip(client, orderDto);
 			Assert.assertEquals(true, tripServiceImpl.allTrip().size() == sizeTrip + 1);
-			Assert.assertEquals(true, orderServiceImpl.allOrder().size() == sizeOrder + 1);
+			Assert.assertEquals(true, orderServiceImpl.getAllOrder().size() == sizeOrder + 1);
 		} catch (Throwable e) {
 			Assert.assertEquals(true, 5 == 4);
 			log.error("Error test ScheduleCar in service" + e);

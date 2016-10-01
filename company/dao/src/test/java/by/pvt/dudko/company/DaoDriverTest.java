@@ -24,8 +24,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.dao.IDao;
-import by.pvt.dudko.company.dao.impl.MySqlCarDao;
-import by.pvt.dudko.company.dao.impl.MySqlDriverDao;
+import by.pvt.dudko.company.dao.impl.CarDao;
+import by.pvt.dudko.company.dao.impl.DriverDao;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Driver;
 
@@ -36,10 +36,10 @@ import by.pvt.dudko.company.entities.Driver;
 @Transactional(propagation = Propagation.REQUIRED)
 public class DaoDriverTest {
 	@Autowired
-	@Qualifier("mySqlCarDao")
-	private IDao <Car>carDao;
+	@Qualifier("carDao")
+	private IDao<Car> carDao;
 	@Autowired
-	@Qualifier("mySqlDriverDao")
+	@Qualifier("driverDao")
 	private IDao<Driver> driverDao;
 	private static Logger log = Logger.getLogger(DaoDriverTest.class);
 	

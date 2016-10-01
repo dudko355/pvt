@@ -19,8 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.dao.IClientDao;
 import by.pvt.dudko.company.dao.IDao;
-import by.pvt.dudko.company.dao.impl.MySqlClientDao;
-import by.pvt.dudko.company.dao.impl.MySqlRolDao;
+import by.pvt.dudko.company.dao.impl.ClientDao;
+import by.pvt.dudko.company.dao.impl.RoleDao;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Role;
 
@@ -32,7 +32,7 @@ public class DaoClientTest {
 	@Autowired
 	private IClientDao clientDao;
 	@Autowired
-	@Qualifier("mySqlRolDao")
+	@Qualifier("roleDao")
 	private IDao<Role> rolDao;
 	private static Logger log = Logger.getLogger(DaoClientTest.class);
 	
@@ -52,7 +52,7 @@ public class DaoClientTest {
 
 		try {
 			log.info("test get client begin");
-			Assert.assertEquals(true,  clientDao.get(1).getRol().getIdRol() == 1);
+			Assert.assertEquals(true,  clientDao.get(1).getRole().getIdRole() == 1);
 		} catch (Exception e) {
 			Assert.assertEquals(true, 5 == 4);
 			log.error("Error test get client " + e);
@@ -67,7 +67,7 @@ public class DaoClientTest {
 			Client client = new Client();
 			client.setLogin("lex");
 			client.setPassword("111");
-			client.setRol((Role)rolDao.get(2));
+			client.setRole((Role)rolDao.get(2));
 			log.info("test create client begin");
 			clientDao.create(client);
 			int j=clientDao.getAll().size();

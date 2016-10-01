@@ -16,6 +16,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * Driver class
+ * POJO Driver 
+ * @author Aliaksei Dudko
+ *
+ */
+
 @Entity
 @Table(name="DRIVER")
 public class Driver implements Serializable  {
@@ -89,7 +96,7 @@ public class Driver implements Serializable  {
 	}
 	@Override
 	public String toString() {
-		return "Driver : id: " + idDriver + " Name: " + name;
+		return name;
 	}
 
 }

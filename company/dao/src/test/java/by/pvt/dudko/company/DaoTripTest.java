@@ -22,13 +22,13 @@ import by.pvt.dudko.company.dao.IClientDao;
 import by.pvt.dudko.company.dao.IDao;
 import by.pvt.dudko.company.dao.IOrderDao;
 import by.pvt.dudko.company.dao.ITripDao;
-import by.pvt.dudko.company.dao.impl.MySqlTripDao;
+import by.pvt.dudko.company.dao.impl.TripDao;
 import by.pvt.dudko.company.dto.FilterTripClientDto;
 import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.Trip;
-import by.pvt.dudko.company.util.UtilDate;
+import by.pvt.dudko.company.util.CompanyDateUtil;
 
 @ContextConfiguration("/testContext.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -58,7 +58,7 @@ public class DaoTripTest {
 
 		try {
 			log.info("test get Trip begin");
-			Assert.assertEquals(true, tripDao.get(2).getDictanse() == 100);
+			Assert.assertEquals(true, tripDao.get(2).getDistance() == 100);
 		} catch (Exception e) {
 			Assert.assertEquals(true, 5 == 4);
 			log.error("Error test get Trip " + e);
@@ -99,7 +99,7 @@ public class DaoTripTest {
 	public void testSortTripClient() {
 		try {
 			SortTripDto sortTrip = new SortTripDto();
-			sortTrip.setColumn("dateBegin");
+			sortTrip.setColumn("dateStart");
 			sortTrip.setOrderColumn("ASC");
 			Client client = clientDao.get(2);
 			List<Trip> trips = tripDao.sortTripClient(sortTrip, null, client,2);
@@ -111,13 +111,13 @@ public class DaoTripTest {
 	}
 
 	@Test
-	public void testgetFiltrTrips() {
+	public void testGetFiltrTrips() {
 		try {
 			Client client = clientDao.get(2);
 			FilterTripClientDto filtrTrip = new FilterTripClientDto();
-			filtrTrip.setDateBegin(UtilDate.date("15/06/2016"));
-			filtrTrip.setDateFinish(UtilDate.date("15/08/2017"));
-			filtrTrip.setTarget("");
+			filtrTrip.setDateStart(CompanyDateUtil.date("15/06/2016"));
+			filtrTrip.setDateFinish(CompanyDateUtil.date("15/08/2017"));
+			filtrTrip.setTripTarget("");
 			List<Trip> trips = tripDao.getFiltrTrips(client, filtrTrip, null);
 			Assert.assertEquals(true, trips != null);
 		} catch (Exception e) {
@@ -132,10 +132,10 @@ public class DaoTripTest {
 
 		try {
 			trip = tripDao.get(2);
-			trip.setDictanse(400);
+			trip.setDistance(400);
 			log.info("test update trip begin");
 			tripDao.update(trip);
-			Assert.assertEquals(true, tripDao.get(2).getDictanse() == 400);
+			Assert.assertEquals(true, tripDao.get(2).getDistance() == 400);
 		} catch (Exception e) {
 			Assert.assertEquals(true, 5 == 4);
 			log.error("Error test update trip " + e);

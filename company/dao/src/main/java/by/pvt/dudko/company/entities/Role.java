@@ -12,7 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+/**
+ * Role class
+ * POJO Role 
+ * @author Aliaksei Dudko
+ *
+ */
 
 
 @Entity
@@ -22,43 +27,43 @@ public class Role implements Serializable {
 	private static final long serialVersionUID = 5L;
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="idRol")
-	private int idRol;
-	@Column(name="rol")
-	private String rol;
-	@OneToMany(mappedBy="rol" ,cascade=CascadeType.ALL)
+    @Column(name="idRole")
+	private int idRole;
+	@Column(name="role")
+	private String role;
+	@OneToMany(mappedBy="role" ,cascade=CascadeType.ALL)
     private Set<Client> clients;
 	
 	public Role() {
 	}
 	
-	public Role(String rol, int idRol) {
-		this.rol = rol;
-		this.idRol = idRol;
+	public Role(String role, int idRole) {
+		this.role = role;
+		this.idRole = idRole;
 	}
 
-	public void setRol(String rol) {
-		this.rol = rol;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
-	public void setIdRol(Integer idRol) {
-		this.idRol = idRol;
+	public void setIdRole(Integer idRole) {
+		this.idRole = idRole;
 	}
 	
 	public void setClients(Set<Client> clients) {
 		this.clients = clients;
 	}
 
-	public String getRol() {
-		return rol;
+	public String getRole() {
+		return role;
 	}
 	
 	public Set<Client> getClients() {
 		return clients;
 	}
 
-	public int getIdRol() {
-		return idRol;
+	public int getIdRole() {
+		return idRole;
 	}
 	@Override
 	public boolean equals(Object o) {
@@ -67,19 +72,19 @@ public class Role implements Serializable {
 		if (!(o instanceof Role))
 			return false;
 		Role rol = (Role) o;
-		if (idRol != 0 ? idRol != rol.idRol : rol.idRol != 0)
+		if (idRole != 0 ? idRole != rol.idRole : rol.idRole != 0)
 			return false;
 		return true;
 	}
 
 	@Override
 	public int hashCode() {
-		int result = idRol != 0 ? new Integer(idRol).hashCode() : 0;
+		int result = idRole != 0 ? new Integer(idRole).hashCode() : 0;
 	return result;
 	}
 
 	@Override
 	public String toString() {
-		return "Rol : id: " + idRol + " : " + rol;
+		return "Rol : id: " + idRole + " : " + role;
 	}
 }

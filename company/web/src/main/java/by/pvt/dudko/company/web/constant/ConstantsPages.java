@@ -1,5 +1,10 @@
 package by.pvt.dudko.company.web.constant;
-
+/**
+ * ConstantsPages class 
+ * 
+ * @author Aliaksei Dudko
+ *
+ */
 public class ConstantsPages {
 	public static final String PAGES_LOGIN = "login";
 	public static final String PAGES_REGISTR = "registration";
@@ -13,5 +18,6 @@ public class ConstantsPages {
 	public static final String ADMIN_INF = "admin_inf";
 	public static final String CHANGE_TRIP = "change_trip";
 	public static final String CHANGE_CAR_COND = "change_car";
+	public static final String CLIENT_ORDER = "client_order";
 
 }

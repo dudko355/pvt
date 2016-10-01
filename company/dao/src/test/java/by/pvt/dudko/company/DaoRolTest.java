@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.dao.IDao;
-import by.pvt.dudko.company.dao.impl.MySqlRolDao;
+import by.pvt.dudko.company.dao.impl.RoleDao;
 import by.pvt.dudko.company.entities.Role;
 
 @ContextConfiguration("/testContext.xml")
@@ -28,7 +28,7 @@ import by.pvt.dudko.company.entities.Role;
 @Transactional(propagation = Propagation.REQUIRED)
 public class DaoRolTest {
 	@Autowired
-	@Qualifier("mySqlRolDao")
+	@Qualifier("roleDao")
 	private IDao<Role> rolDao;
 	private static Logger log = Logger.getLogger(DaoRolTest.class);
 	
@@ -48,7 +48,7 @@ public class DaoRolTest {
 		
 		try {
 			log.info("test get rol begin");
-			Assert.assertEquals(true,rolDao.get(2).getIdRol()==2);
+			Assert.assertEquals(true,rolDao.get(2).getIdRole()==2);
 		} catch (Exception e) {
 			Assert.assertEquals(true, 5==4);
 			log.error("Error test get rol " + e);
@@ -57,7 +57,7 @@ public class DaoRolTest {
 	@Test
 	public void testCreateRolDao() {
 		Role rol=new Role();
-		rol.setRol("user");
+		rol.setRole("user");
 		try {
 			int i=rolDao.getAll().size();
 			log.info("test create rol begin");
@@ -73,10 +73,10 @@ public class DaoRolTest {
 	public void testUpdateRolDao() {
 		try {
 			Role rol=rolDao.get(2);
-			rol.setRol("us");
+			rol.setRole("us");
 			log.info("test update rol begin");
 			rolDao.update(rol);
-			Assert.assertEquals(true,rolDao.get(2).getRol().equals("us"));
+			Assert.assertEquals(true,rolDao.get(2).getRole().equals("us"));
 		} catch (Exception e) {
 			Assert.assertEquals(true, 5==4);
 			log.error("Error test update rol " + e);

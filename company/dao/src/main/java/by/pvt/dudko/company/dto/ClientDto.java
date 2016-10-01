@@ -1,7 +1,11 @@
 package by.pvt.dudko.company.dto;
 
 import javax.persistence.Column;
-
+/**
+ * ClientDto class 
+ * @author Aliaksei Dudko
+ *
+ */
 public class ClientDto {
 	
 	private String password;

@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Trip;
+import by.pvt.dudko.company.implement.IClientService;
 import by.pvt.dudko.company.service.CarServiceImpl;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 
@@ -30,7 +31,7 @@ import by.pvt.dudko.company.service.ClientServiceImpl;
 @Transactional(propagation = Propagation.REQUIRED)
 public class ClientTest {
 	@Autowired 
-	private ClientServiceImpl clientServiceImpl;
+	private IClientService clientServiceImpl;
 	private static Logger log = Logger.getLogger(ClientTest.class);
 	
 	@Before

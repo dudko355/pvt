@@ -9,30 +9,30 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.dao.IDao;
-import by.pvt.dudko.company.dao.impl.MySqlDriverDao;
+import by.pvt.dudko.company.dao.impl.DriverDao;
 import by.pvt.dudko.company.entities.Driver;
 import by.pvt.dudko.company.exception.ServiceException;
-
+import by.pvt.dudko.company.implement.IDriverService;
+/**
+ * DriverServerImpl class 
+ * business logic 
+ * @author Aliaksei Dudko
+ *
+ */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class DriverServerImpl {
+public class DriverServerImpl implements IDriverService{
 	@Autowired
-	@Qualifier("mySqlDriverDao")
-	private IDao mySqlDriverDao;
+	@Qualifier("driverDao")
+	private IDao driverDao;
 	private static final Logger log = Logger.getLogger(DriverServerImpl.class);
 
 	public DriverServerImpl() {
 	}
 
-	/**
-	 * all drivers
-	 * 
-	 * @return collection all driver
-	 * 
-	 */
 
 	public List<Driver> allDriver() {
-		List<Driver> list = mySqlDriverDao.getAll();
+		List<Driver> list = driverDao.getAll();
 		return list;
 	}
 }

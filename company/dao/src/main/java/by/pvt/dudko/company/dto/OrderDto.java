@@ -7,13 +7,17 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
-
+/**
+ * OrderDto class 
+ * @author Aliaksei Dudko
+ *
+ */
 public class OrderDto {
 	
-	private String target;
-	private int dictanse;
+	private String orderTarget;
+	private int distance;
 	@NotEmpty(message="wrong date.")
-	private String dateBegin;
+	private String dateStart;
 	@NotEmpty(message="wrong date.")
 	private String dateFinish;
 	private int seatCount;
@@ -36,32 +40,32 @@ public class OrderDto {
 		return volume;
 	}
 
-	public String getTarget() {
-		return target;
+	public String getOrderTarget() {
+		return orderTarget;
 	}
 
-	public int getDictanse() {
-		return dictanse;
+	public int getDistance() {
+		return distance;
 	}
 
-	public String getDateBegin() {
-		return dateBegin;
+	public String getDateStart() {
+		return dateStart;
 	}
 
 	public String getDateFinish() {
 		return dateFinish;
 	}
 	
-	public void setTarget(String target) {
-		this.target = target;
+	public void setOrderTarget(String orderTarget) {
+		this.orderTarget = orderTarget;
 	}
 
-	public void setDictanse(int dictanse) {
-		this.dictanse = dictanse;
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 
-	public void setDateBegin(String dateBegin) {
-		 this.dateBegin= dateBegin;
+	public void setDateStart(String dateStart) {
+		 this.dateStart= dateStart;
 		 
 	}
 

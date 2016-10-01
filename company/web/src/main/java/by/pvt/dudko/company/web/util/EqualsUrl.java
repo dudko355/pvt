@@ -1,7 +1,12 @@
 package by.pvt.dudko.company.web.util;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * EqualsUrl class 
+ * contain permitted URL in Array
+ * @author Aliaksei Dudko
+ *
+ */
 public class EqualsUrl {
 public static String[] urlEquals(HttpServletRequest request){
 	String path = request.getContextPath();

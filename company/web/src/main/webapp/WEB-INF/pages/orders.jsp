@@ -20,19 +20,32 @@ input {
 	text-align: left
 }
 </style>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script
+	src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/jquery-ui.min.js"></script>
+<link rel="stylesheet"
+	href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.3/themes/sunny/jquery-ui.css">
 <script type="text/javascript">
 	$(function() {
 
-		$('#datep').datepicker();
+		$('#datep').datepicker({
+			constrainInput : true,
+			changeMonth : true,
+			changeYear : true,
+			yearRange : "-1:+2"
+
+		});
 
 	});
 	$(function() {
 
-		$('#datepic').datepicker();
+		$('#datepic').datepicker({
+			constrainInput : true,
+			changeMonth : true,
+			changeYear : true,
+			yearRange : "-1:+2"
+		});
 
 	});
 </script>
@@ -99,12 +112,13 @@ body {
 			<fmt:message key="dateIf" />
 
 			<br> <input
-				value="<fmt:formatDate value="${filtr.dateBegin}" dateStyle="full" />"
-				name="dateBegin" readonly="readonly" id="datep" /> - <input
-				value="<fmt:formatDate value="${filtr.dateFinish}" dateStyle="full" />"
+				value="<fmt:formatDate value="${filtr.dateStart}" pattern="MM/dd/yyyy" dateStyle="full" />"
+				name="dateStart" readonly="readonly" id="datep" /> - <input
+				value="<fmt:formatDate value="${filtr.dateFinish}" pattern="MM/dd/yyyy" dateStyle="full" />"
 				name="dateFinish" readonly="readonly" id="datepic" /> <br>
 			<fmt:message key="target" />
-			<br> <input type="text" name="target" value="${filtr.target}">
+			<br> <input type="text" name="target"
+				value="${filtr.tripTarget}">
 			<c:out value="${messages['target']}" />
 			<br> <br> <input type="hidden" name="page" value="ORDER_IF" />
 
@@ -164,7 +178,7 @@ body {
 							</c:when>
 							<c:otherwise>
 								<th><input type="radio" name="order" value="ASC" checked></th>
-								<th><input type="radio" name="order" value="DESC" ></th>
+								<th><input type="radio" name="order" value="DESC"></th>
 							</c:otherwise>
 						</c:choose>
 						<th><select name="source">
@@ -172,7 +186,7 @@ body {
 									<c:if test="${source.column eq 'conditionTrip'}">
 										<fmt:message key="sort_0" />
 									</c:if>
-									<c:if test="${source.column eq 'dateBegin'}">
+									<c:if test="${source.column eq 'dateStart'}">
 										<fmt:message key="sort_1" />
 									</c:if>
 									<c:if test="${source.column eq 'dateFinish'}">
@@ -181,7 +195,7 @@ body {
 								</option>
 								<option value='${source.column}'></option>
 								<option value='conditionTrip'><fmt:message key="sort_0" /></option>
-								<option value='dateBegin'><fmt:message key="sort_1" /></option>
+								<option value='dateStart'><fmt:message key="sort_1" /></option>
 								<option value='dateFinish'><fmt:message key="sort_2" /></option>
 
 						</select></th>
@@ -216,8 +230,8 @@ body {
 					<c:forEach var="trip" items="${trips}">
 						<tr>
 							<td><c:out value="${trip.idOrder}" /></td>
-							<td><c:out value="${trip.target}" /></td>
-							<td><fmt:formatDate value="${trip.dateBegin}"
+							<td><c:out value="${trip.tripTarget}" /></td>
+							<td><fmt:formatDate value="${trip.dateStart}"
 									dateStyle="full" /></td>
 							<td><fmt:formatDate value="${trip.dateFinish}"
 									dateStyle="full" /></td>

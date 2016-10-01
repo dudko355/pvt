@@ -13,7 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-
+/**
+ * Client class
+ * POJO Client 
+ * @author Aliaksei Dudko
+ *
+ */
 
 @Entity
 @Table(name="USER")
@@ -29,16 +34,16 @@ public class Client implements Serializable  {
 	@Column(name="login")
 	private String login;
 	@ManyToOne
-	@JoinColumn(name="rol")
-	private Role rol;
+	@JoinColumn(name="role")
+	private Role role;
 	@OneToMany(mappedBy="client")	
 	private Set<Order> orders;
 
 	public Client(){}
 	
-	public Client(Role rol, String login, String password) {
+	public Client(Role role, String login, String password) {
 		this.idClient = idClient;
-		this.rol = rol;
+		this.role = role;
 		this.login = login;
 		this.password = password;
 	}
@@ -54,8 +59,8 @@ public class Client implements Serializable  {
 		this.orders = orders;
 	}
 
-	public void setRol(Role rol) {
-		this.rol = rol;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public void setLogin(String login) {
@@ -66,8 +71,8 @@ public class Client implements Serializable  {
 		return password;
 	}
 
-	public Role getRol() {
-		return rol;
+	public Role getRole() {
+		return role;
 	}
 	
 	public Set<Order> getOrders() {
@@ -101,6 +106,6 @@ public class Client implements Serializable  {
 
 	@Override
 	public String toString() {
-		return "Client : id: " + idClient + " Name: " + login+" , Rol : "+rol;
+		return "Client : id: " + idClient + " Name: " + login+" , Rol : "+role;
 	}
 }

@@ -24,6 +24,9 @@ import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.Trip;
+import by.pvt.dudko.company.implement.IAdminService;
+import by.pvt.dudko.company.implement.IClientService;
+import by.pvt.dudko.company.implement.IOrderService;
 import by.pvt.dudko.company.service.AdminServiceImpl;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
@@ -36,11 +39,11 @@ import by.pvt.dudko.company.service.TripServiceImpl;
 public class AdminTest {
 	
 	@Autowired 
-	private AdminServiceImpl adminServiceImpl;
+	private IAdminService adminServiceImpl;
 	@Autowired 
-	private ClientServiceImpl clientServiceImpl;
+	private IClientService clientServiceImpl;
 	@Autowired 
-	private OrderServiceImpl orderServiceImpl;
+	private IOrderService orderServiceImpl;
 	private static Logger log = Logger.getLogger(AdminTest.class);
 	
 	@Before
@@ -58,12 +61,12 @@ public class AdminTest {
 	public void testSelectCar() {
 		try {
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin("10/12/2016");
+			orderDto.setDateStart("10/12/2016");
 			orderDto.setDateFinish("10/15/2016");
-			orderDto.setDictanse(29);
+			orderDto.setDistance(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);
-			orderDto.setTarget("vena");
+			orderDto.setOrderTarget("vena");
 			orderDto.setVolume(2);
 			Client client=clientServiceImpl.getUser("alex", "111111");	
 			Order order=orderServiceImpl.formOrder(client, orderDto);
@@ -80,12 +83,12 @@ public class AdminTest {
 	public void testFormTrip() {
 		try {
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin("10/12/2016");
+			orderDto.setDateStart("10/12/2016");
 			orderDto.setDateFinish("10/15/2016");
-			orderDto.setDictanse(29);
+			orderDto.setDistance(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);
-			orderDto.setTarget("vena");
+			orderDto.setOrderTarget("vena");
 			orderDto.setVolume(2);
 			Client client=clientServiceImpl.getUser("alex", "111111");	
 			Order order=orderServiceImpl.formOrder(client, orderDto);
@@ -101,7 +104,7 @@ public class AdminTest {
 	public void testBrokenCars() {
 		
 		try {
-			List<Car> list=adminServiceImpl.brokenCars();
+			List<Car> list=adminServiceImpl.getBrokenCars();
 			Assert.assertEquals(true, list.size()!=0);
 			
 		} catch (Throwable e) {

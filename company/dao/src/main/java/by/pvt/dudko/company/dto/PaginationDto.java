@@ -1,5 +1,9 @@
 package by.pvt.dudko.company.dto;
-
+/**
+ * PaginationDto class 
+ * @author Aliaksei Dudko
+ *
+ */
 public class PaginationDto {
 	// count element on the page
 	private int count;

@@ -20,6 +20,11 @@ import by.pvt.dudko.company.entities.Car;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Trip;
 import by.pvt.dudko.company.exception.ServiceException;
+import by.pvt.dudko.company.implement.IAdminService;
+import by.pvt.dudko.company.implement.ICarService;
+import by.pvt.dudko.company.implement.IClientService;
+import by.pvt.dudko.company.implement.IDriverService;
+import by.pvt.dudko.company.implement.ITripService;
 import by.pvt.dudko.company.service.AdminServiceImpl;
 import by.pvt.dudko.company.service.CarServiceImpl;
 import by.pvt.dudko.company.service.ClientServiceImpl;
@@ -27,22 +32,26 @@ import by.pvt.dudko.company.service.DriverServerImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
 import by.pvt.dudko.company.service.TripServiceImpl;
 import by.pvt.dudko.company.web.constant.ConstantsPages;
-
+/**
+ * AdminController class 
+  * @author Aliaksei Dudko
+ *
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 	private static final int ADMIN_ROLE_ID = 1;
 	private static final Logger log = Logger.getLogger(AdminController.class);
 	@Autowired
-	private AdminServiceImpl adminServiceImpl;
+	private IAdminService adminServiceImpl;
 	@Autowired
-	private DriverServerImpl driverServerImpl;
+	private IDriverService driverServerImpl;
 	@Autowired
-	private CarServiceImpl carServiceImpl;
+	private ICarService carServiceImpl;
 	@Autowired
-	private ClientServiceImpl clientServiceImpl;
+	private IClientService clientServiceImpl;
 	@Autowired
-	private TripServiceImpl tripServiceImpl;
+	private ITripService tripServiceImpl;
 
 	public AdminController() {
 	}
@@ -58,7 +67,7 @@ public class AdminController {
 
 	@RequestMapping(value = "/exit", method = RequestMethod.GET)
 	public String adminExit(HttpServletRequest request) {
-		request.getSession().invalidate();
+		request.getSession().removeAttribute("USER");
 		return ConstantsPages.PAGES_BASE;
 	}
 
@@ -92,7 +101,7 @@ public class AdminController {
 	@RequestMapping(value = "/car", method = RequestMethod.GET)
 	public String adminCarInf(Model model) {
 		String page = null;
-		model.addAttribute("ALLCAR", carServiceImpl.allCar());
+		model.addAttribute("ALLCAR", carServiceImpl.getAllCar());
 		page = ConstantsPages.CHANGE_CAR_COND;
 		return page;
 	}
@@ -103,8 +112,8 @@ public class AdminController {
 		int idCar = Integer.parseInt((request.getParameter("change_condition")));
 		int newCond = Integer.parseInt((request.getParameter("condition")).trim());
 		Car car = carServiceImpl.getCar(idCar);
-		carServiceImpl.changeConditionCar(car, newCond);
-		model.addAttribute("ALLCAR", carServiceImpl.allCar());
+		carServiceImpl.changeCarCondition(car, newCond);
+		model.addAttribute("ALLCAR", carServiceImpl.getAllCar());
 		page = ConstantsPages.CHANGE_CAR_COND;
 		return page;
 	}
@@ -113,10 +122,10 @@ public class AdminController {
 	@RequestMapping(value = "/inf", method = RequestMethod.GET)
 	public String adminInf(Model model, HttpServletRequest request) {
 		String page = null;
-		model.addAttribute("CARS", adminServiceImpl.brokenCars());
+		model.addAttribute("CARS", adminServiceImpl.getBrokenCars());
 		model.addAttribute("DRIVER", driverServerImpl.allDriver());
 		model.addAttribute("ALLTRIP", tripServiceImpl.allTrip());
-		List<Car> list = adminServiceImpl.busyCar();
+		List<Car> list = adminServiceImpl.getBusyCar();
 		model.addAttribute("CARTRIP", list);
 		page = ConstantsPages.ADMIN_INF;
 		return page;
@@ -137,7 +146,6 @@ public class AdminController {
 		log.error("error", e);
 		ModelAndView model = new ModelAndView("error_two");
 		model.addObject("ERROR", "dataBaseError");
-		
 		return model;
 	}
 }

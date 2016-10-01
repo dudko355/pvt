@@ -16,6 +16,13 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Parameter;
 import org.hibernate.annotations.GenericGenerator;
 
+/**
+ * Trip class
+ * operation with POJO Trip 
+ * @author Aliaksei Dudko
+ *
+ */
+
 @Entity
 @Table(name = "TRIP")
 public class Trip implements Serializable {
@@ -26,16 +33,16 @@ public class Trip implements Serializable {
 	@GenericGenerator(name = "gen", strategy = "foreign", parameters = @Parameter(name = "property", value = "order"))
 	@GeneratedValue(generator = "gen")
 	private int idOrder;
-	@Column(name = "dictanse")
-	private int dictanse;
-	@Column(name = "target")
-	private String target;
+	@Column(name = "distance")
+	private int distance;
+	@Column(name = "tripTarget")
+	private String tripTarget;
 	@Column(name = "idClient")
 	private int idClient;
 	@Column(name = "idTrip")
 	private int idTrip;
-	@Column(name = "dateBegin")
-	private Date dateBegin;
+	@Column(name = "dateStart")
+	private Date dateStart;
 	@Column(name = "dateFinish")
 	private Date dateFinish;
 	@Column(name = "conditionTrip")
@@ -50,16 +57,16 @@ public class Trip implements Serializable {
 	public Trip() {
 	}
 
-	public Trip(String target, int dictanse, int idClient, int idTrip, Date dateBegin, Date dateFinish,
+	public Trip(String tripTarget, int distance, int idClient, int idTrip, Date dateStart, Date dateFinish,
 			int conditionTrip, Car car, Order order) {
-		this.target = target;
-		this.dictanse = dictanse;
+		this.tripTarget = tripTarget;
+		this.distance = distance;
 		this.car = car;
 		this.order = order;
 		this.idOrder = idOrder;
 		this.idClient = idClient;
 		this.idTrip = idTrip;
-		this.dateBegin = dateBegin;
+		this.dateStart = dateStart;
 		this.dateFinish = dateFinish;
 		this.conditionTrip = conditionTrip;
 	}
@@ -88,16 +95,16 @@ public class Trip implements Serializable {
 		return idTrip;
 	}
 
-	public void setTarget(String target) {
-		this.target = target;
+	public void setTripTarget(String tripTarget) {
+		this.tripTarget = tripTarget;
 	}
 
-	public void setDictanse(int dictanse) {
-		this.dictanse = dictanse;
+	public void setDistance(int distance) {
+		this.distance = distance;
 	}
 
-	public void setDateBegin(Date dateBegin) {
-		this.dateBegin = dateBegin;
+	public void setDateStart(Date dateStart) {
+		this.dateStart = dateStart;
 
 	}
 
@@ -130,16 +137,16 @@ public class Trip implements Serializable {
 		return idClient;
 	}
 
-	public String getTarget() {
-		return target;
+	public String getTripTarget() {
+		return tripTarget;
 	}
 
-	public int getDictanse() {
-		return dictanse;
+	public int getDistance() {
+		return distance;
 	}
 
-	public Date getDateBegin() {
-		return dateBegin;
+	public Date getDateStart() {
+		return dateStart;
 	}
 
 	public Date getDateFinish() {
@@ -161,7 +168,7 @@ public class Trip implements Serializable {
 			return false;
 		if (idClient != 0 ? idClient != trip.idClient : trip.idClient != 0)
 			return false;
-		if (dateBegin != null ? !dateBegin.equals(trip.dateBegin) : trip.dateBegin != null)
+		if (dateStart != null ? !dateStart.equals(trip.dateStart) : trip.dateStart != null)
 			return false;
 		if (dateFinish != null ? !dateFinish.equals(trip.dateFinish) : trip.dateFinish != null)
 			return false;
@@ -173,7 +180,7 @@ public class Trip implements Serializable {
 		int result0 = idTrip != 0 ? new Integer(idTrip).hashCode() : 0;
 		int result1 = idClient != 0 ? new Integer(idClient).hashCode() : 0;
 		int result2 = idOrder != 0 ? new Integer(idOrder).hashCode() : 0;
-		int result3 = dateBegin != null ? dateBegin.hashCode() : 0;
+		int result3 = dateStart != null ? dateStart.hashCode() : 0;
 		int result4 = dateFinish != null ? dateFinish.hashCode() : 0;
 		int result = (result0 + result1 + result2 + result3 + result4) * 7 + 18;
 		return result;

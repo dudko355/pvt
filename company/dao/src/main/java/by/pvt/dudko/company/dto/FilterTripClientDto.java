@@ -2,22 +2,28 @@ package by.pvt.dudko.company.dto;
 
 import java.util.Date;
 
-import by.pvt.dudko.company.util.UtilDate;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import by.pvt.dudko.company.util.CompanyDateUtil;
 
+/**
+ * FilterTripClientDto class 
+ * @author Aliaksei Dudko
+ *
+ */
 
 public class FilterTripClientDto {
 	
-	private Date dateBegin=UtilDate.date("01/01/1990");
-	private Date dateFinish=UtilDate.date("01/01/2020");
-	private String target="";
+	private Date dateStart=CompanyDateUtil.date("01/01/1990");
+	private Date dateFinish=CompanyDateUtil.date("01/01/2020");
+	private String tripTarget="";
 	private final int start=1;
 	
-	public Date getDateBegin() {
-		return dateBegin;
+	public Date getDateStart() {
+		return dateStart;
 	}
-	public void setDateBegin(Date dateBegin) {
-		this.dateBegin = dateBegin;
+	public void setDateStart(Date dateStart) {
+		this.dateStart = dateStart;
 	}
 	public Date getDateFinish() {
 		return dateFinish;
@@ -25,11 +31,11 @@ public class FilterTripClientDto {
 	public void setDateFinish(Date dateFinish) {
 		this.dateFinish = dateFinish;
 	}
-	public String getTarget() {
-		return target;
+	public String getTripTarget() {
+		return tripTarget;
 	}
-	public void setTarget(String target) {
-		this.target = target;
+	public void setTripTarget(String target) {
+		this.tripTarget = target;
 	}
 	public int getStart() {
 		return start;

@@ -78,7 +78,9 @@ body {
 				</fieldset>
 				<input type="hidden" name="page" value="enter" />
 			</s:form>
-			<p id="txt"></p>
+			<a href="${pageContext.servletContext.contextPath}/start_page"><button>
+					<fmt:message key="back" />
+				</button></a>
 		</div>
 	
 	<footer>

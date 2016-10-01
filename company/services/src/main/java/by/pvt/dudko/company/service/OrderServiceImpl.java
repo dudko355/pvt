@@ -14,95 +14,80 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.dao.IDao;
 import by.pvt.dudko.company.dao.IOrderDao;
-import by.pvt.dudko.company.dao.impl.MySqlOrderDao;
+import by.pvt.dudko.company.dao.impl.OrderDao;
 import by.pvt.dudko.company.dto.OrderDto;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.PropertiesOrder;
 import by.pvt.dudko.company.entities.Trip;
+import by.pvt.dudko.company.exception.DateException;
 import by.pvt.dudko.company.exception.ServiceException;
-import by.pvt.dudko.company.util.UtilDate;
-
+import by.pvt.dudko.company.implement.IOrderService;
+import by.pvt.dudko.company.implement.IServiceService;
+import by.pvt.dudko.company.util.CompanyDateUtil;
+/**
+ * OrderServiceImpl class 
+ * business logic 
+ * @author Aliaksei Dudko
+ *
+ */
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
-public class OrderServiceImpl {
-
+public class OrderServiceImpl implements IOrderService{
+	private final int DATE_CORRECT=0;
+	private final int DATE_INCORRECT=1;
+	private final int CAR_NOT_FOUND=2;
 	@Autowired
-	private IOrderDao mySqlOrderDao;
+	private IOrderDao orderDao;
 	@Autowired
-	private ServiceImpl serviceImpl;
+	private IServiceService serviceImpl;
 	private static final Logger log = Logger.getLogger(OrderServiceImpl.class);
 
 	public OrderServiceImpl() {
 	}
 
-	/**
-	 * all orders
-	 * 
-	 * @return collection all orders
-	 * @throws ServiceException
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Order> allOrder() {
-		List<Order> list = mySqlOrderDao.getAll();
+	public List<Order> getAllOrder() {
+		List<Order> list = orderDao.getAll();
 		return list;
 	}
 
-	/**
-	 * method for comparing dates of existing trips in the car with the date of
-	 * the new trip
-	 * 
-	 * @param client,orderDto
-	 * @return int 0-if car is find,1 - if data is incorrect,2-if don't suitable
-	 *         car
-	 * @throws ServiceException
-	 */
+	
+	
 	public int estimateDateOrder(OrderDto orderDto, Client client) {
-		int i = 1;
+		int result = DATE_INCORRECT;
 		Date date = new Date();
-		Date dateBegin=UtilDate.date(orderDto.getDateBegin());
-		Date dateFinish=UtilDate.date(orderDto.getDateFinish());
 		try {
+			Date dateBegin=CompanyDateUtil.date(orderDto.getDateStart());
+			Date dateFinish=CompanyDateUtil.date(orderDto.getDateFinish());
 			if (dateFinish.after(dateBegin) && dateBegin.after(date)) {
-				serviceImpl.transactionSaveTrip(client, orderDto);
-				i = 0;
+				result = DATE_CORRECT;
 			} else {
 				log.info("INCORRECT DATA on the ORDER FORM");
 			}
-		} catch (ServiceException e) {
-			i = 2;
+		} catch (Exception e) {
+			result = CAR_NOT_FOUND;
 		}
-		return i;
+		return result;
 	}
 
-	/**
-	 * method define id next order
-	 * 
-	 * @return id Order
-	 * @throws ServiceException
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int numberTrip() {
-		int idOrder = mySqlOrderDao.getMaxIdOrder() + 1;
+	public int getNumberNextTrip() {
+		int idOrder = orderDao.getMaxIdOrder() + 1;
 		return idOrder;
 	}
 
-	/**
-	 * method generates an order
-	 * 
-	 * @param client,orderDto
-	 * @return object Order
-	 * @throws ServiceException
-	 */
 
-	public Order formOrder(Client client, OrderDto orderDto) {
+	public Order formOrder(Client client, OrderDto orderDto){
 		PropertiesOrder propertiesOrder = new PropertiesOrder();
-		propertiesOrder.setDateBegin(UtilDate.date(orderDto.getDateBegin()));
-		propertiesOrder.setDateFinish(UtilDate.date(orderDto.getDateFinish()));
-		propertiesOrder.setDictanse(orderDto.getDictanse());
+		propertiesOrder.setDateStart(CompanyDateUtil.date(orderDto.getDateStart()));
+		propertiesOrder.setDateFinish(CompanyDateUtil.date(orderDto.getDateFinish()));
+		propertiesOrder.setDistance(orderDto.getDistance());
 		propertiesOrder.setMass(orderDto.getMass());
 		propertiesOrder.setSeatCount(orderDto.getSeatCount());
-		propertiesOrder.setTarget(orderDto.getTarget());
+		propertiesOrder.setOrderTarget(orderDto.getOrderTarget());
 		propertiesOrder.setVolume(orderDto.getVolume());
 		Order order = new Order();
 		order.setClient(client);
@@ -111,27 +96,15 @@ public class OrderServiceImpl {
 
 	}
 
-	/**
-	 * method write object order in database
-	 * 
-	 * @param order
-	 * @throws ServiceException
-	 */
-	public void fixationOrder(Order order) {
-		mySqlOrderDao.create(order);
+
+	public void createOrder(Order order) {
+		orderDao.create(order);
 	}
 
-	/**
-	 * method get one order
-	 * 
-	 * @return object order
-	 * @param id
-	 *            order
-	 * @throws ServiceException
-	 */
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Order getOrder(int idOrder) {
-		Order order = (Order) mySqlOrderDao.get(idOrder);
+		Order order = (Order) orderDao.get(idOrder);
 		return order;
 	}
 }

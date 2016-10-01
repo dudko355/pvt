@@ -15,29 +15,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+/**
+ * Order class POJO Order
+ * 
+ * @author Aliaksei Dudko
+ *
+ */
 
 @Entity
-@Table(name="ORDERS")
+@Table(name = "ORDERS")
 public class Order implements Serializable {
 
 	private static final long serialVersionUID = 4L;
-	
+
 	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name="idOrder")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idOrder")
 	private int idOrder;
 	@Embedded
 	private PropertiesOrder propertiesOrder;
 	@ManyToOne
-	@JoinColumn(name="idClient")
+	@JoinColumn(name = "idClient")
 	private Client client;
-	@OneToOne(mappedBy="order", cascade=CascadeType.ALL)
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Trip trip;
 
 	public Order() {
 	}
 
-	public Order( Client client, PropertiesOrder propertiesOrder) {
+	public Order(Client client, PropertiesOrder propertiesOrder) {
 
 		this.idOrder = idOrder;
 		this.client = client;
@@ -97,16 +103,14 @@ public class Order implements Serializable {
 
 	@Override
 	public int hashCode() {
-		int result1 = client != null ? client.hashCode() : 0;
-		int result2 = idOrder != 0 ? new Integer(idOrder).hashCode() : 0;
-		int result3 = propertiesOrder != null ? propertiesOrder.hashCode() : 0;
-		int result = (result1 + result2 + result3) * 7 + 18;
-		return result;
+		return (client.hashCode() + new Integer(idOrder).hashCode() + propertiesOrder.hashCode()) * 7 + 18;
+
 	}
 
 	@Override
 	public String toString() {
-		return "Client : " + client + " Order : id: " + idOrder + " Target: " + propertiesOrder.getTarget()
-				+ " Date start: " + propertiesOrder.getDateBegin() + " Date finish: " + propertiesOrder.getDateFinish();
+		return "Client : " + client + " Order : id: " + idOrder + " Target: " + propertiesOrder.getOrderTarget()
+				+ " Date start: " + propertiesOrder.getDateStart() + " Date finish: " + propertiesOrder.getDateFinish();
 	}
+
 }

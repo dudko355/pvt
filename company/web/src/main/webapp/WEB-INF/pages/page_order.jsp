@@ -23,7 +23,7 @@ input {
 </style>
 <script type="text/javascript">
 function Formdata(data){
-	if (data.dateBegin != null && data.dateBegin.value.length == 0 )
+	if (data.dateStart != null && data.dateStart.value.length == 0 )
 	{
 	alert('<fmt:message key="validDateBegin" />');
 	return false;}
@@ -90,20 +90,20 @@ body {
 				<fieldset>
 
 					<label for="target"><fmt:message key="target" /> :</label> <input
-						id="target" type="text" size="20" maxlength="20" name="target"
+						id="target" type="text" size="20" maxlength="20" name="orderTarget"
 						required /> <br> <br>
 					<fmt:message key="distanse" />
 					: <br>
-					<s:select name="distanse" path="dictanse">
+					<s:select name="distanse" path="distance">
 						<c:forEach var="i" begin="1" end="10">
 							<option value="${i*10}">${i*10}</option>
 						</c:forEach>
 					</s:select>
 					<br> <br>
 					<fmt:message key="dateBegin" />
-					:<br> <input name="dateBegin" readonly
+					:<br> <input name="dateStart" readonly
 								id="datep" required />
-							<s:errors name="dateBegin" /> <br> <br>
+							<s:errors name="dateStart" /> <br> <br>
 					<fmt:message key="dateFinish" />
 					: <br>
 					<input name="dateFinish" readonly id="datepic" required />  <s:errors

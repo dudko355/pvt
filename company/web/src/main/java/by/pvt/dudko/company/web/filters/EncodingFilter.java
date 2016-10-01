@@ -7,7 +7,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import java.io.IOException;
-
+/**
+ * EncodingFilter class 
+ * @author Aliaksei Dudko
+ *
+ */
 public class EncodingFilter implements Filter {
     private String encoding = "utf-8";
 

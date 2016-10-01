@@ -21,17 +21,20 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import by.pvt.dudko.company.dao.impl.MySqlCarDao;
+import by.pvt.dudko.company.dao.impl.CarDao;
 import by.pvt.dudko.company.dto.OrderDto;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Driver;
 import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.Trip;
+import by.pvt.dudko.company.implement.ICarService;
+import by.pvt.dudko.company.implement.IClientService;
+import by.pvt.dudko.company.implement.IOrderService;
 import by.pvt.dudko.company.service.CarServiceImpl;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.DriverServerImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
-import by.pvt.dudko.company.util.UtilDate;
+import by.pvt.dudko.company.util.CompanyDateUtil;
 
 @ContextConfiguration("/testContextServices.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -40,11 +43,11 @@ import by.pvt.dudko.company.util.UtilDate;
 public class OrderTest {
 	
 	@Autowired 
-	private CarServiceImpl carServiceImpl;
+	private ICarService carServiceImpl;
 	@Autowired 
-	private ClientServiceImpl clientServiceImpl;
+	private IClientService clientServiceImpl;
 	@Autowired
-	private OrderServiceImpl orderServiceImpl;
+	private IOrderService orderServiceImpl;
 	private static Logger log = Logger.getLogger(OrderTest.class);
 	
 	@Before
@@ -64,7 +67,7 @@ public class OrderTest {
 
 		try {
 			log.info("test get all order in service begin");
-			List<Order> allOrder=orderServiceImpl.allOrder();
+			List<Order> allOrder=orderServiceImpl.getAllOrder();
 			Assert.assertEquals(true, allOrder.get(0)!=null);
 			
 		} catch (Throwable e) {
@@ -77,7 +80,7 @@ public class OrderTest {
 
 		try {
 			log.info("test get numberOrder in service begin");
-			int number=orderServiceImpl.numberTrip();
+			int number=orderServiceImpl.getNumberNextTrip();
 			Assert.assertEquals(true, number !=0);
 			
 		} catch (Throwable e) {
@@ -104,22 +107,22 @@ public class OrderTest {
 			
 		try {
 			log.info("test FormAndFixOrder in service begin");
-			int size=orderServiceImpl.allOrder().size();
+			int size=orderServiceImpl.getAllOrder().size();
 			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin("10/12/2016");
+			orderDto.setDateStart("10/12/2016");
 			orderDto.setDateFinish("10/15/2016");
-			orderDto.setDictanse(29);
+			orderDto.setDistance(29);
 			orderDto.setMass(2);
 			orderDto.setSeatCount(1);
-			orderDto.setTarget("vena");
+			orderDto.setOrderTarget("vena");
 			orderDto.setVolume(2);
 			Client client=clientServiceImpl.getUser("alex", "111111");	
 			Order order=orderServiceImpl.formOrder(client, orderDto);
-			Trip trip = new Trip(orderDto.getTarget(), 275, 2, 102, UtilDate.date(orderDto.getDateBegin()),
-					UtilDate.date(orderDto.getDateFinish()), 0, carServiceImpl.getCar(1), order);
+			Trip trip = new Trip(orderDto.getOrderTarget(), 275, 2, 102, CompanyDateUtil.date(orderDto.getDateStart()),
+					CompanyDateUtil.date(orderDto.getDateFinish()), 0, carServiceImpl.getCar(1), order);
 			order.setTrip(trip);
-			orderServiceImpl.fixationOrder(order);
-			Assert.assertEquals(true, orderServiceImpl.allOrder().size() == size+1);
+			orderServiceImpl.createOrder(order);
+			Assert.assertEquals(true, orderServiceImpl.getAllOrder().size() == size+1);
 			
 		} catch (Throwable e) {
 			Assert.assertEquals(true, 5==4);

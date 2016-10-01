@@ -19,32 +19,39 @@ import by.pvt.dudko.company.dto.PaginationDto;
 import by.pvt.dudko.company.dto.SortTripDto;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Trip;
+import by.pvt.dudko.company.exception.DateException;
 import by.pvt.dudko.company.exception.ServiceException;
+import by.pvt.dudko.company.implement.ITripService;
 import by.pvt.dudko.company.service.TripServiceImpl;
-import by.pvt.dudko.company.util.UtilDate;
+import by.pvt.dudko.company.util.CompanyDateUtil;
 import by.pvt.dudko.company.web.constant.ConstantsPages;
-
+/**
+ * TripController class 
+ * operation on the client page 
+ * @author Aliaksei Dudko
+ *
+ */
 @Controller
 @RequestMapping("/trip")
 public class TripController {
 	private static final Logger log = Logger.getLogger(TripController.class);
 
 	@Autowired
-	private TripServiceImpl tripServiceImpl;
+	private ITripService tripServiceImpl;
 
 	@RequestMapping(value = "/filtr", method = RequestMethod.POST)
-	public String filtrTrip(Model model, HttpServletRequest request){
+	public String filtrTrip(Model model, HttpServletRequest request) throws Exception{
 		String page = null;
 		FilterTripClientDto filtrTripClientDto = new FilterTripClientDto();
-		String dateBegin = request.getParameter("dateBegin").trim();
+		String dateStart = request.getParameter("dateStart").trim();
 		String dateFinish = request.getParameter("dateFinish").trim();
-		if (!dateBegin.equals("")) {
-			filtrTripClientDto.setDateBegin(UtilDate.date(dateBegin));
+		if (!dateStart.equals("")) {
+			filtrTripClientDto.setDateStart(CompanyDateUtil.date(dateStart));
 		}
 		if (!dateFinish.equals("")) {
-			filtrTripClientDto.setDateFinish(UtilDate.date(dateFinish));
+			filtrTripClientDto.setDateFinish(CompanyDateUtil.date(dateFinish));
 		}
-		filtrTripClientDto.setTarget(request.getParameter("target").trim());
+		filtrTripClientDto.setTripTarget(request.getParameter("target").trim());
 		Client client = (Client) request.getSession().getAttribute("USER");
 		SortTripDto sortTripDto = (SortTripDto) request.getSession().getAttribute("source");
 		List<Trip> tripsDefine = tripServiceImpl.filtrTrip(client, filtrTripClientDto, sortTripDto);

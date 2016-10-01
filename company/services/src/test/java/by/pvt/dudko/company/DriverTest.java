@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Driver;
+import by.pvt.dudko.company.implement.IDriverService;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.DriverServerImpl;
 
@@ -29,7 +30,7 @@ import by.pvt.dudko.company.service.DriverServerImpl;
 @Transactional(propagation = Propagation.REQUIRED)
 public class DriverTest {
 	@Autowired
-	private DriverServerImpl driverServerImpl;
+	private IDriverService driverServerImpl;
 	private static Logger log = Logger.getLogger(DriverTest.class);
 	
 	@Before

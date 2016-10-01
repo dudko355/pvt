@@ -11,7 +11,12 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
+/**
+ * BaseDao class
+ * CRUD operation with POJO  
+ * @author Aliaksei Dudko
+ *
+ */
 
 @Repository
 public class BaseDao<T> implements IDao<T> {

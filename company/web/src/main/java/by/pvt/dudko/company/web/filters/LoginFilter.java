@@ -17,6 +17,12 @@ import org.hibernate.Session;
 
 import by.pvt.dudko.company.web.util.EqualsUrl;
 
+/**
+ * LoginFilter class protects from unauthorized login the system
+ * 
+ * @author Aliaksei Dudko
+ *
+ */
 public class LoginFilter implements Filter {
 	private static final Logger log = Logger.getLogger(LoginFilter.class);
 
@@ -31,17 +37,21 @@ public class LoginFilter implements Filter {
 		boolean skip = (session != null) && (session.getAttribute("USER") != null);
 		boolean enter = "enter".equals(request.getParameter("page"));
 		boolean loginRequest = false;
-		for (String url : EqualsUrl.urlEquals(request)) {
-			if (urlRequest.equals(url)) {
-				loginRequest = true;
-				break;
-			}
-		}
-		if (skip || loginRequest || enter) {
+		if (skip || enter) {
 			chain.doFilter(request, response);
 		} else {
-			log.info("unauthorized entry");
-			request.getRequestDispatcher("/WEB-INF/pages/start_page.jsp").forward(request, response);
+			for (String url : EqualsUrl.urlEquals(request)) {
+				if (urlRequest.equals(url)) {
+					loginRequest = true;
+					break;
+				}
+			}
+			if (loginRequest) {
+				chain.doFilter(request, response);
+			} else {
+				log.info("unauthorized entry");
+				request.getRequestDispatcher("/WEB-INF/pages/start_page.jsp").forward(request, response);
+			}
 		}
 	}
 

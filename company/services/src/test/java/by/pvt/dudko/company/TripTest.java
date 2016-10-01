@@ -24,6 +24,11 @@ import by.pvt.dudko.company.dto.PaginationDto;
 import by.pvt.dudko.company.entities.Client;
 import by.pvt.dudko.company.entities.Order;
 import by.pvt.dudko.company.entities.Trip;
+import by.pvt.dudko.company.implement.ICarService;
+import by.pvt.dudko.company.implement.IClientService;
+import by.pvt.dudko.company.implement.IOrderService;
+import by.pvt.dudko.company.implement.IServiceService;
+import by.pvt.dudko.company.implement.ITripService;
 import by.pvt.dudko.company.service.CarServiceImpl;
 import by.pvt.dudko.company.service.ClientServiceImpl;
 import by.pvt.dudko.company.service.OrderServiceImpl;
@@ -35,13 +40,13 @@ import by.pvt.dudko.company.service.TripServiceImpl;
 @Transactional(propagation = Propagation.REQUIRED)
 public class TripTest {
 	@Autowired 
-	private CarServiceImpl carServiceImpl;
+	private ICarService carServiceImpl;
 	@Autowired
-	private TripServiceImpl tripServiceImpl;
+	private ITripService tripServiceImpl;
 	@Autowired 
-	private ClientServiceImpl clientServiceImpl;
+	private IClientService clientServiceImpl;
 	@Autowired
-	private OrderServiceImpl orderServiceImpl;
+	private IOrderService orderServiceImpl;
 	private static Logger log = Logger.getLogger(TripTest.class);
 	
 	@Before
@@ -133,7 +138,7 @@ public class TripTest {
 		try {
 			log.info("test GetTrip in service begin");
 			Trip trip=tripServiceImpl.getTrip(2);
-			Assert.assertEquals(true, trip.getDictanse() !=0);
+			Assert.assertEquals(true, trip.getDistance() !=0);
 			
 		} catch (Throwable e) {
 			Assert.assertEquals(true, 5==4);
@@ -141,43 +146,43 @@ public class TripTest {
 		}
 	}
 	
-	@Test
-	public void testFixTrip() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		
-		try {
-			log.info("test FixTrip in service begin");
-			int size=tripServiceImpl.allTrip().size();
-			OrderDto orderDto=new OrderDto();
-			orderDto.setDateBegin("10/12/2016");
-			orderDto.setDateFinish("10/15/2016");
-			orderDto.setDictanse(29);
-			orderDto.setMass(2);
-			orderDto.setSeatCount(1);
-			orderDto.setTarget("vena");
-			orderDto.setVolume(2);
-			Client client=clientServiceImpl.getUser("alex", "111111");	
-			Order order=orderServiceImpl.formOrder(client, orderDto);
-			orderServiceImpl.fixationOrder(order);
-			Trip trip=new Trip();
-			trip.setCar(carServiceImpl.allCar().get(0));
-			trip.setConditionTrip(-1);
-			trip.setDateBegin(sdf.parse("2016-10-12"));
-			trip.setDateFinish(sdf.parse("2016-10-15"));
-			trip.setDictanse(29);
-			trip.setIdClient(client.getIdClient());
-			trip.setIdOrder(order.getIdOrder());
-			trip.setIdTrip(order.getIdOrder());
-			trip.setOrder(order);
-			trip.setTarget("vena");
-			tripServiceImpl.fixationTrip(trip);
-			Assert.assertEquals(true, tripServiceImpl.allTrip().size() == size+1);
-			
-		} catch (Throwable e) {
-			Assert.assertEquals(true, 5==4);
-			log.error("Error test FormAndFixOrder in service" + e);
-		}
-	}
+//	@Test
+//	public void testFixTrip() {
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		
+//		try {
+//			log.info("test FixTrip in service begin");
+//			int size=tripServiceImpl.allTrip().size();
+//			OrderDto orderDto=new OrderDto();
+//			orderDto.setDateStart("10/12/2016");
+//			orderDto.setDateFinish("10/15/2016");
+//			orderDto.setDistance(29);
+//			orderDto.setMass(2);
+//			orderDto.setSeatCount(1);
+//			orderDto.setOrderTarget("vena");
+//			orderDto.setVolume(2);
+//			Client client=clientServiceImpl.getUser("alex", "111111");	
+//			Order order=orderServiceImpl.formOrder(client, orderDto);
+//			orderServiceImpl.createOrder(order);
+//			Trip trip=new Trip();
+//			trip.setCar(carServiceImpl.getAllCar().get(0));
+//			trip.setConditionTrip(-1);
+//			trip.setDateStart(sdf.parse("2016-10-12"));
+//			trip.setDateFinish(sdf.parse("2016-10-15"));
+//			trip.setDistance(29);
+//			trip.setIdClient(client.getIdClient());
+//			trip.setIdOrder(order.getIdOrder());
+//			trip.setIdTrip(order.getIdOrder());
+//			trip.setOrder(order);
+//			trip.setTripTarget("vena");
+//			tripServiceImpl.fixationTrip(trip);
+//			Assert.assertEquals(true, tripServiceImpl.allTrip().size() == size+1);
+//			
+//		} catch (Throwable e) {
+//			Assert.assertEquals(true, 5==4);
+//			log.error("Error test FormAndFixOrder in service" + e);
+//		}
+//	}
 	@Test
 	public void testDeleteTrip() {
 

@@ -14,7 +14,11 @@ import by.pvt.dudko.company.dto.ClientDto;
 import by.pvt.dudko.company.exception.ServiceException;
 import by.pvt.dudko.company.web.constant.ConstantsPages;
 
-
+/**
+ * StartController class 
+ * @author Aliaksei Dudko
+ *
+ */
 @Controller
 public class StartController {
 	private static final Logger log = Logger.getLogger(StartController.class);
