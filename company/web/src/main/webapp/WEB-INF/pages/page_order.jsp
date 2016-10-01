@@ -90,7 +90,7 @@ body {
 				<fieldset>
 
 					<label for="target"><fmt:message key="target" /> :</label> <input
-						id="target" type="text" size="20" maxlength="20" name="orderTarget"
+						id="target" type="text" size="20" value="${orderDto.orderTarget}" maxlength="20" name="orderTarget"
 						required /> <br> <br>
 					<fmt:message key="distanse" />
 					: <br>
@@ -99,15 +99,19 @@ body {
 							<option value="${i*10}">${i*10}</option>
 						</c:forEach>
 					</s:select>
-					<br> <br>
+					<br>
+					<c:if test="${ERROR != null}">
+					<font color="red"><fmt:message key="${ERROR}" /></font>
+					</c:if>
+					<br>
 					<fmt:message key="dateBegin" />
-					:<br> <input name="dateStart" readonly
+					:<br> <input name="dateStart" readonly value="${orderDto.dateStart}"
 								id="datep" required />
 							<s:errors name="dateStart" /> <br> <br>
 					<fmt:message key="dateFinish" />
 					: <br>
-					<input name="dateFinish" readonly id="datepic" required />  <s:errors
-								name="dateFinish" /><s:errors name="dateFinish" />
+					<input name="dateFinish" readonly id="datepic" value="${orderDto.dateFinish}" required />  <s:errors
+								name="dateFinish" />
 							<br> <br>
 					<fmt:message key="volume" />
 					: <br>

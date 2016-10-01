@@ -87,8 +87,8 @@ public class ClientController {
 	public String fixationTrip(Model model,@Valid @ModelAttribute("orderDto") OrderDto orderDto,BindingResult bindingResult, HttpServletRequest request){
 		 if(bindingResult.hasErrors()) {
 			    model.addAttribute("ERROR", "incorrect");
-				model.addAttribute("URL", "client/order");
-				return ConstantsPages.ERROR;
+				model.addAttribute("orderDto", orderDto);
+				return ConstantsPages.PAGES_ORDER;
 		 }
 		Client client = (Client) request.getSession().getAttribute("USER");
 		Car car=null;
@@ -111,8 +111,8 @@ public class ClientController {
 			return ConstantsPages.ERROR;
 		} else {
 			model.addAttribute("ERROR", "incorrect");
-			model.addAttribute("URL", "client/order");
-			return ConstantsPages.ERROR;
+			model.addAttribute("orderDto", orderDto);
+			return ConstantsPages.PAGES_ORDER;
 		}
 	
 	}
@@ -150,6 +150,7 @@ public class ClientController {
 	public String makeOrder(Model model, HttpServletRequest request) {
 		OrderDto orderDto=new OrderDto();
 		model.addAttribute(orderDto);
+		model.addAttribute("ERROR",null);
 		return ConstantsPages.PAGES_ORDER;
 	}
 	
