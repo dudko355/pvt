@@ -53,7 +53,7 @@ and write inside the tag <servers>
 9)Run this application(...\company\dao\src\main\resources\company.bat)
 (remark:your mysql server shouldn't have database with name "company")
 10)open web browser
-11)input there http://localhost:8080/company/(if you don't change port)
+11)input there http://localhost:8080/logistics/(if you don't change port)
 =====================================================================================
 Initial application data
 1)administrator(password:2110984 name:admin)
