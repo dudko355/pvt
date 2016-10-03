@@ -39,7 +39,6 @@ public class DaoCarTest {
 	private static Logger log = Logger.getLogger(DaoCarTest.class);
 	
 
-
 	@Test
 	public void testGetCar() {
 

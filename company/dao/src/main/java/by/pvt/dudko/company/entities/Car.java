@@ -42,7 +42,7 @@ public class Car implements Serializable {
 	 @Column(name="volume")
 	private int volume;
 	 //-1 - the car is broken, 0 - the car is available, 1 - the car is busy
-	 @Column(name="condition")
+	 @Column(name="conditionCar")
 	private int condition;
 	@ManyToMany(fetch = FetchType.EAGER,mappedBy="cars", cascade={
 			CascadeType.DETACH,

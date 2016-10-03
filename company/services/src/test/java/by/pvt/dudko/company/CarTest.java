@@ -92,9 +92,10 @@ public class CarTest {
 
 		try {
 			log.info("test condCar in service begin");
-			Car car=carServiceImpl.getCar(10);
+			Car car=carServiceImpl.getCar(2);
 			carServiceImpl.changeCarCondition(car, -1);
-			Assert.assertEquals(true, carServiceImpl.getCarConditionById(10) == -1);
+			
+			Assert.assertEquals(true, carServiceImpl.getCarConditionById(2) == -1);
 		} catch (Throwable e) {
 			Assert.assertEquals(true, 5==4);
 			log.error("Error test condCar in service" + e);
